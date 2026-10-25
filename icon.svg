@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B3A4A"/>
+      <stop offset="1" stop-color="#0A7A5E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.46" r="0.5">
+      <stop offset="0" stop-color="#5EEAD4" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#5EEAD4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leafL" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E6FF9E"/>
+      <stop offset="1" stop-color="#9BE15D"/>
+    </linearGradient>
+    <linearGradient id="leafR" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5BE37D"/>
+      <stop offset="1" stop-color="#16A35A"/>
+    </linearGradient>
+    <linearGradient id="drop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A5ECFF"/>
+      <stop offset="1" stop-color="#1F9FE8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Arka plan: derin camgobegi -> zumrut -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="200" fill="url(#glow)"/>
+
+  <!-- Kompozisyon: guvenli daire (r=170) icinde ortalanmis -->
+  <g transform="translate(256 256) scale(0.94) translate(-232 -254)">
+  <!-- Yaprak + termometre (45 derece egik, ucu sag-uste) -->
+  <g transform="translate(-14 -14) rotate(45 256 256)">
+    <path d="M256 100C352 160 360 292 256 380C152 292 160 160 256 100Z" fill="url(#leafR)"/>
+    <path d="M256 100C160 160 152 292 256 380Z" fill="url(#leafL)"/>
+    <!-- Yan damarlar = olcek cizgileri -->
+    <g stroke="#0B3A4A" stroke-width="12" stroke-linecap="round" stroke-opacity="0.32" fill="none">
+      <path d="M240 212L208 188M240 262L206 238M240 312L212 290"/>
+      <path d="M272 212L304 188M272 262L306 238M272 312L300 290"/>
+    </g>
+    <!-- Termometre borusu (orta damar) -->
+    <path d="M256 158V384" stroke="#0B3A4A" stroke-width="32" stroke-linecap="round"/>
+    <circle cx="256" cy="388" r="38" fill="#0B3A4A"/>
+    <!-- Civa -->
+    <path d="M256 388V246" stroke="#FF6A3D" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="256" cy="388" r="25" fill="#FF6A3D"/>
+  </g>
+
+  <!-- Nem damlasi -->
+  <path d="M326 300C338 318 354 334 354 356A28 28 0 0 1 298 356C298 334 314 318 326 300Z" fill="url(#drop)"/>
+  <path d="M310 357A16 16 0 0 0 322 372" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round" stroke-opacity="0.75"/>
+  </g>
+</svg>
