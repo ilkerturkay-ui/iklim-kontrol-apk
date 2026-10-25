@@ -4487,6 +4487,16 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         if (btnPushEl) {
           btnPushEl.classList.add('hidden');
         }
+        // iPhone/iPad web sürümü (https): yerel bağlantı ve eşleştirme kurulamaz; cihazın kendi sayfasına yönlendir.
+        if (location.protocol === 'https:' && !capYerelMi()) {
+          const cihazAdresi = getConfiguredLocalHost();
+          if (badgeEl) badgeEl.textContent = "🔒 Salt Okunur (Web Sürümü)";
+          if (textEl) textEl.innerHTML = `🔒 <b>Bilgilendirme:</b> Bu web sürümünde cihaza yerel Wi-Fi ile bağlanılamaz ve eşleştirme yapılamaz; bu yüzden ayar kutuları <b>salt okunurdur</b>. Ayarları değiştirmek için telefonunuz cihazla <b>aynı Wi-Fi ağındayken</b> cihazın kendi sayfasını açın (yönetici şifresi gerekir): <span class="font-mono">${esc(cihazAdresi)}</span>`;
+          if (btnEl) {
+            btnEl.onclick = () => { window.open(cihazAdresi, '_blank'); };
+            btnEl.innerHTML = `<span>🌐</span><span id="btnSettingsLocalConnectLabel">Cihaz Sayfasını Aç</span>`;
+          }
+        }
       }
     }
 
@@ -4533,6 +4543,15 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       const statusEl = document.getElementById('localConnectionStatus');
       const btnEl = document.getElementById('btnSettingsLocalConnect');
       const btnHeaderLoc = document.getElementById('btnModeLocal');
+
+      // https:// sayfasından http:// cihaz adresine istek tarayıcıca engellenir (iPhone/iPad web sürümü).
+      if (location.protocol === 'https:' && /^http:/i.test(host) && !capYerelMi()) {
+        const mesaj = 'Bu web sürümünde (https) cihaza yerel Wi-Fi ile bağlanılamaz; tarayıcı güvenli sayfadan şifresiz cihaz adresine erişimi engeller.\n\nVeri izleme için ☁️ ThingSpeak kullanın. Ayar göndermek için cihazla eşleştirilmişse "Değişiklikleri Cihaza Gönder" uzaktan (ThingSpeak ve PIN ile) gönderir. Yerel Wi-Fi için Android uygulamasını kullanın.';
+        if (statusEl) statusEl.innerHTML = `<span class="text-amber-500 font-semibold">⚠️ Bu web sürümünde yerel Wi-Fi bağlantısı yok; ThingSpeak kullanın.</span>`;
+        updateHeaderConnectionButtonsUI();
+        alert(mesaj);
+        return false;
+      }
 
       if (btnEl) {
         btnEl.innerHTML = `<span>⏳</span><span>Cihaz Aranıyor...</span>`;
