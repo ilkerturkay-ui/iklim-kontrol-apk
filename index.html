@@ -421,9 +421,9 @@
         </button>
       </div>
 
-      <!-- 4. SATIR: En Solda Küçük İtalik v4.9.3, Sağda Kılavuz ve Aksiyon İkonları -->
+      <!-- 4. SATIR: En Solda Küçük İtalik v4.9.4, Sağda Kılavuz ve Aksiyon İkonları -->
       <div class="mt-2 flex items-center justify-between gap-2">
-        <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide pl-0.5" id="surumEtiketi">v4.9.3</span>
+        <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide pl-0.5" id="surumEtiketi">v4.9.4</span>
 
         <div class="flex items-center gap-1.5 ml-auto">
           <button onclick="switchTab('guide')" title="Kullanım Kılavuzu" class="px-2.5 py-1 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 transition text-xs font-bold flex items-center gap-1">
@@ -734,14 +734,9 @@ Ayd:78(05-20)  P:1013</pre>
               <button onclick="openInfoModal('vpd')" class="info-btn" title="VPD ve Terleme İndeksi Detaylı Bilgi">i</button>
             </div>
           </div>
+          <style>.olcek-sar{margin-bottom:.25rem;font-size:.75rem;color:var(--muted-foreground)}.olcek{position:relative;height:1.1rem;line-height:1.1rem}.olcek>span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}.olcek>span.sol{transform:none}.olcek>span.sag{transform:translateX(-100%)}.olcek-ad{font-size:.68rem;opacity:.75}</style>
           <div class="mt-3">
-            <div class="flex justify-between text-xs text-[var(--muted-foreground)] mb-1">
-              <span>0.0 (Yoğuşma)</span>
-              <span>0.4 (Fide)</span>
-              <span>0.8 (Optimal)</span>
-              <span>1.2 (Yüksek)</span>
-              <span>1.6+ kPa (Stres)</span>
-            </div>
+            <div class="olcek-sar"><div class="olcek olcek-ad"><span class="" style="left:10%">Yoğuşma</span><span class="" style="left:30%">Fide</span><span class="" style="left:50%">Optimal</span><span class="" style="left:70%">Yüksek</span><span class="" style="left:90%">Stres</span></div><div class="olcek olcek-sayi"><span class="sol" style="left:0%">0</span><span class="" style="left:20%">0.4</span><span class="" style="left:40%">0.8</span><span class="" style="left:60%">1.2</span><span class="" style="left:80%">1.6+ kPa</span></div></div>
             <div class="relative h-4 rounded-full overflow-hidden flex border border-[var(--border)]">
               <div class="w-[20%] bg-blue-500/70"></div>
               <div class="w-[20%] bg-teal-500/75"></div>
@@ -788,12 +783,7 @@ Ayd:78(05-20)  P:1013</pre>
             </div>
           </div>
           <div class="mt-3">
-            <div class="flex justify-between text-xs text-[var(--muted-foreground)] mb-1">
-              <span>0 (Yoğuşma)</span>
-              <span>2 (Risk sınırı)</span>
-              <span>3 (Güvenli)</span>
-              <span>8+ °C (Çiğ Marjı)</span>
-            </div>
+            <div class="olcek-sar"><div class="olcek olcek-ad"><span class="" style="left:12.5%">Yoğuşma</span><span class="" style="left:31.25%">Risk</span><span class="" style="left:68.75%">Güvenli</span></div><div class="olcek olcek-sayi"><span class="sol" style="left:0%">0</span><span class="" style="left:25%">2</span><span class="" style="left:37.5%">3</span><span class="sag" style="left:100%">8+ °C</span></div></div>
             <div class="relative h-4 rounded-full overflow-hidden flex border border-[var(--border)]">
               <div class="bg-rose-500/80" style="width: 25%;"></div>
               <div class="bg-amber-500/80" style="width: 12.5%;"></div>
@@ -838,13 +828,7 @@ Ayd:78(05-20)  P:1013</pre>
             </div>
           </div>
           <div class="mt-3">
-            <div class="flex justify-between text-xs text-[var(--muted-foreground)] mb-1">
-              <span id="gradLbl1">-4</span>
-              <span id="gradLbl2">-2 (Ters eşik)</span>
-              <span>0</span>
-              <span id="gradLbl3">8 (Üst eşik)</span>
-              <span id="gradLbl4">12+ °C</span>
-            </div>
+            <div class="olcek-sar"><div class="olcek olcek-ad"><span id="gradAd1" class="" style="left:6%">Ters</span><span id="gradAd2" class="" style="left:50%">Normal</span><span id="gradAd3" class="" style="left:94%">Üst</span></div><div class="olcek olcek-sayi"><span id="gradLbl1" class="sol" style="left:0%">-4</span><span id="gradLbl2" class="" style="left:12.5%">-2</span><span id="gradLbl0" class="" style="left:25%">0</span><span id="gradLbl3" class="" style="left:75%">8</span><span id="gradLbl4" class="sag" style="left:100%">12+ °C</span></div></div>
             <div class="relative h-4 rounded-full overflow-hidden flex border border-[var(--border)]">
               <div id="gradSegTers" class="bg-rose-500/80" style="width: 12.5%;"></div>
               <div id="gradSegNormal" class="bg-emerald-500/85" style="width: 75%;"></div>
@@ -884,13 +868,7 @@ Ayd:78(05-20)  P:1013</pre>
             </div>
           </div>
           <div class="mt-3">
-            <div class="flex justify-between text-xs text-[var(--muted-foreground)] mb-1">
-              <span>0</span>
-              <span id="dliEtiketDusuk">%70</span>
-              <span id="dliEtiketHedef">Hedef</span>
-              <span id="dliEtiketFazla">%125</span>
-              <span id="dliEtiketUst">2× hedef</span>
-            </div>
+            <div class="olcek-sar"><div class="olcek olcek-sayi"><span class="sol" style="left:0%">0</span><span id="dliEtiketDusuk" class="" style="left:35%">%70</span><span id="dliEtiketHedef" class="" style="left:50%">Hedef</span><span id="dliEtiketFazla" class="" style="left:62.5%">%125</span><span id="dliEtiketUst" class="sag" style="left:100%">2× hedef</span></div></div>
             <div class="relative h-4 rounded-full overflow-hidden flex border border-[var(--border)]">
               <div class="bg-rose-500/75" style="width:35%"></div>
               <div class="bg-amber-500/80" style="width:10%"></div>
@@ -1476,7 +1454,7 @@ Ayd:78(05-20)  P:1013</pre>
                 <input type="file" accept=".json" onchange="uploadBackupJSON(event)" class="hidden" />
               </label>
             </div>
-            <button id="btnPushSettingsToDevice" onclick="pushSettingsToLocalDevice()" class="hidden px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 shadow transition">
+            <button id="btnPushSettingsToDevice" onclick="ayarlariCihazaGonder()" class="hidden px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 shadow transition">
               📤 Değişiklikleri Cihaza Gönder (EEPROM Kaydet)
             </button>
           </div>
@@ -2877,7 +2855,7 @@ Ayd:78(05-20)  P:1013</pre>
       if (yoneticiSurumu) {  // V4.5: geliştiricinin kendi APK'si
         lisansBilgisi = { ad: 'Yönetici', bitis: '0', kimlik, yonetici: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.3 · Yönetici';
+        if (etiket) etiket.textContent = 'v4.9.4 · Yönetici';
         dilBaslat();  // V4.9: dil düğmesi yalnız yönetici sürümünde
         lisansSatiriniGuncelle();
         widgetKoprusuGuncelle();
@@ -3889,8 +3867,11 @@ Ayd:78(05-20)  P:1013</pre>
         document.getElementById('gradSegTers').style.width = `${gp(-2)}%`;
         document.getElementById('gradSegNormal').style.width = `${gp(gEsik) - gp(-2)}%`;
         document.getElementById('gradSegUst').style.width = `${100 - gp(gEsik)}%`;
-        document.getElementById('gradLbl3').textContent = `${gEsik} (Üst eşik)`;
+        const gyer = (id, p) => { const e = document.getElementById(id); if (e) e.style.left = `${p}%`; };
+        document.getElementById('gradLbl3').textContent = `${gEsik}`;
         document.getElementById('gradLbl4').textContent = `${gMax}+ °C`;
+        gyer('gradLbl2', gp(-2)); gyer('gradLbl0', gp(0)); gyer('gradLbl3', gp(gEsik));
+        gyer('gradAd1', gp(-2) / 2); gyer('gradAd2', (gp(-2) + gp(gEsik)) / 2); gyer('gradAd3', (gp(gEsik) + 100) / 2);
         document.getElementById('gradPointer').style.left = `${isNaN(state.termalGradyan) ? 0 : Math.min(98, Math.max(2, gp(state.termalGradyan)))}%`;
       }
 
@@ -4852,6 +4833,75 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         ayarBandiGoster(`❌ Cihaza ayar gönderilemedi: ${esc(sebep)}`, 'hata');
         return false;
       }
+    }
+
+    // V4.9.4: Ayarlar sayfasından gönderimde cihaz rehberden bir bitki için ayarlıysa ve bitki ayarları
+    // (sıcaklık/nem/ışık saatleri) değiştiyse sorulur: aynı bitki (koşullar değişti) mi, listede olmayan başka bir bitki mi?
+    async function ayarlariCihazaGonder() {
+      const p = aktifProfil();
+      const y = p && p.yetistirme && p.yetistirme.durum === 'onayli' && yrKayitCoz(p.yetistirme) ? p.yetistirme : null;
+      let karar = null;
+      if (y && y.gonderilen) {
+        updateSettingsFromUI();
+        const fark = YR_CIHAZ_ALANLARI.filter(([k]) => y.gonderilen[k] !== undefined && Number(ayar[k]) !== Number(y.gonderilen[k]));
+        if (fark.length) {
+          const c = yrKayitCoz(y);
+          const satir = fark.map(([k, et, bi]) => `<tr><td>${esc(et)}</td><td>${esc(y.gonderilen[k])}${esc(bi)}</td><td class="yr-yeni">${esc(ayar[k])}${esc(bi)}</td></tr>`).join('');
+          karar = await guvenliDiyalog({
+            baslik: '🌿 Bu değişiklik hangi bitki için?',
+            icerikHtml: `<p class="text-[var(--foreground)]">Cihaz şu an Yetiştirme Rehberi'nden <b>${esc(c.b.simge || '')} ${yrBitkiAdi(c.b, c.pr, y.tip)}</b> · ${esc(c.ev.ad)} için ayarlı. Değiştirdiğiniz değerler:</p>
+              <table class="yr-fark"><tr><th></th><th>Önceki</th><th>Yeni</th></tr>${satir}</table>
+              <p><b>Aynı bitki:</b> bitki bilgisi üst bantta ve Rehber'de kalır, değiştirilen koşullar belirtilir.<br><b>Başka bitki:</b> rehberdeki bitki kaydı kaldırılır.</p>`,
+            secimEtiketi: 'Yeni ayarlar ne için?',
+            secenekler: [
+              { deger: 'ayni', etiket: `Aynı bitki (${c.b.ad}) – koşullarını değiştirerek yetiştirmeye devam` },
+              { deger: 'yeni', etiket: 'Listede olmayan başka bir bitki için yeni koşullar' }
+            ],
+            onayMetni: 'Devam et ve gönder'
+          });
+          if (karar === null) return false;
+        }
+      }
+      const sonuc = await pushSettingsToLocalDevice();
+      if (!karar || !sonuc) return sonuc;
+      // Yerel yolda ayar cihazın kaydettiği (kırpılmış olabilir) değerlerle güncellenmiştir
+      const degerler = Object.fromEntries(YR_CIHAZ_ALANLARI.map(([k]) => [k, ayar[k]]));
+      if (sonuc === true || karar === 'yeni') {
+        yrElleDegisiklikIsle(p.id, y.zaman, karar, degerler);
+      } else if (sonuc.onay) {  // uzaktan: cihaz onaylayınca
+        sonuc.onay.then(s => { if (s === 'ack') yrElleDegisiklikIsle(p.id, y.zaman, karar, degerler); });
+      }
+      return sonuc;
+    }
+    function yrElleDegisiklikIsle(profilId, zaman, karar, degerler) {
+      const p = profiles.find(x => x.id === profilId);
+      const y = p && p.yetistirme;
+      if (!y || y.zaman !== zaman) return;  // bu arada rehberden yeni gönderim yapılmış
+      if (karar === 'yeni') {
+        delete p.yetistirme;
+        delete p.yetistirmeBekleyen;
+        ortakBitkiKaydiYayinla(p, null);  // diğer telefonlarda da eski bitki görünmesin
+      } else {
+        if (!y.rehberDegerleri) y.rehberDegerleri = { ...y.gonderilen };
+        y.gonderilen = { ...degerler };
+        y.degisen = YR_CIHAZ_ALANLARI.map(([k]) => k).filter(k => y.rehberDegerleri[k] !== undefined && Number(degerler[k]) !== Number(y.rehberDegerleri[k]));
+        y.degisimZamani = Date.now();
+        y.onayZamani = Date.now();
+        ortakBitkiKaydiYayinla(p, y);
+      }
+      p.ortakBitki = null;  // kanaldaki eski kayıt bir sonraki okumaya kadar dikkate alınmaz
+      yrProfilleriKaydet();
+      bitkiSatiriniGuncelle();
+      if (yrAcikMi()) yrCiz();
+    }
+    // Değiştirilen koşulların kısa metni: "Gündüz sıcaklık 26 °C, Gece nem 70 %"
+    function yrDegisimMetni(y, rehberli = false) {
+      return (y && y.degisen || []).map(k => {
+        const a = YR_CIHAZ_ALANLARI.find(x => x[0] === k);
+        if (!a) return '';
+        const yeni = `${esc(y.gonderilen && y.gonderilen[k])}${esc(a[2])}`;
+        return rehberli && y.rehberDegerleri ? `<span>${esc(a[1])}</span>: <span>rehber</span> ${esc(y.rehberDegerleri[k])}${esc(a[2])} → <span>cihazda</span> <b>${yeni}</b>` : `<span>${esc(a[1])}</span> ${yeni}`;
+      }).filter(Boolean);
     }
 
     async function fetchLocalDeviceLive() {
@@ -6419,7 +6469,9 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         } else {
           const amac = c.b.profiller.length > 1 ? ` · ${esc(c.pr.ad)}` : '';
           const bek = p.yetistirmeBekleyen && p.yetistirmeBekleyen.durum === 'bekliyor';
+          const dg = yrDegisimMetni(y);
           const ek = bek ? ' <span class="bitki-satiri-uyari">⏳ yeni ayar onay bekliyor</span>'
+            : dg.length ? ` <span class="bitki-satiri-uyari" title="Rehber değerleri yerine elle değiştirilen koşullar"><span>✏️ değiştirildi</span>: ${dg.join(', ')}</span>`
             : (g.kaynak === 'kendi' && !(state.cihazAyarOzeti) && yrAyarDegistiMi(y) ? ' <span class="bitki-satiri-uyari" title="Cihaz ayarları rehberden gönderilen değerlerden farklı">⚠️ ayarlar elle değişti</span>' : '');
           el.innerHTML = `<span aria-hidden="true">${esc(c.b.simge || '🌿')}</span> <b>${yrBitkiAdi(c.b, c.pr, y.tip)}</b> (<i>${esc(c.b.latince)}</i>)${amac} · ${esc(c.ev.ad)}${ek}`;
           el.title = g.kaynak === 'kanal' ? 'Cihaz bu bitki ve evre için ayarlı (ortak kayıt: Komut kanalı)' : 'Cihaz bu bitki ve evre için ayarlı (Yetiştirme Rehberi)';
@@ -6439,6 +6491,8 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       if (c) {
         const gun = yrGunFarki(y.evreTarihi);
         html += `<div>✅ Bu oda: <b>${esc(c.b.simge || '')} ${yrBitkiAdi(c.b, c.pr, y.tip)}</b> <i class="yr-lat">(${esc(c.b.latince)})</i> · ${esc(c.ev.ad)}${gun >= 0 ? ` · evrede ${gun + 1}. gün` : ''}</div>`;
+        const dg = yrDegisimMetni(y);
+        if (dg.length) html += `<div style="margin-top:4px">✏️ Koşullar elle değiştirildi: ${dg.join(', ')}</div>`;
       } else {
         html += '<div class="yr-soluk">Bu oda için henüz rehberden bitki ayarı gönderilmedi.</div>';
       }
@@ -6706,6 +6760,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         .map(a => `<li><b>${esc(YR_PARAM_AD[a])}:</b> ${yrDegerMetni(ev[a]) || '—'}${yrRozet(ev[a].g)} ${yrAtif(ev[a].k, sira)}${ev[a].n ? ` — ${esc(ev[a].n)}` : ''}</li>`).join('');
       const etiketler = [
         durum.uygulanan ? '<span class="yr-etiket yr-etiket-yesil">✅ Cihazda uygulanıyor</span>' : '',
+        durum.degisim ? '<span class="yr-etiket yr-etiket-sari">✏️ Koşullar değiştirildi</span>' : '',
         durum.bekleyen ? '<span class="yr-etiket yr-etiket-sari">⏳ Onay bekleniyor</span>' : '',
         durum.tahmini ? '<span class="yr-etiket yr-etiket-mavi">📅 Takvime göre şu anki evre</span>' : ''
       ].join('');
@@ -6714,6 +6769,11 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         const ust = ev.sure && (ev.sure.ar ? ev.sure.ar[1] : ev.sure.d);
         const gecti = !!(ust && durum.evreGunu + 1 > ust && durum.sonrakiVar);
         gunNotu = `<div class="yr-not ${gecti ? 'yr-not-uyari' : 'yr-not-bilgi'}">📅 Bu evrede ${durum.evreGunu + 1}. gün${yrDegerVar(ev.sure) ? ` (öneri ${yrDegerMetni(ev.sure, ' gün')})` : ''}.${gecti ? ' Bitkiniz hazırsa bir sonraki evreye geçme zamanı gelmiş olabilir.' : ''}</div>`;
+      }
+      if (durum.degisim) {
+        const d = durum.degisim;
+        const tarih = d.degisimZamani ? new Date(d.degisimZamani).toLocaleDateString('tr-TR') : '';
+        gunNotu += `<div class="yr-not yr-not-uyari"><b>✏️ Bu evrenin koşulları elle değiştirildi${tarih ? ` (${esc(tarih)})` : ''}.</b> Cihaz bu bitki için rehber değerleri yerine şu değerlerle çalışıyor:${yrDegisimMetni(d, true).map(s => `<div>• ${s}</div>`).join('')}<div class="yr-k">Rehber değerlerine dönmek için aşağıdaki düğmeyle bu evrenin ayarlarını yeniden gönderin.</div></div>`;
       }
       return `
         <details class="yr-evre${durum.uygulanan ? ' yr-aktif' : ''}" id="yrEvre-${esc(ev.id)}"${durum.acik ? ' open' : ''}>
@@ -6772,6 +6832,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
           bekleyen: !!(bek && bek.evreId === ev.id),
           tahmini: !!(tahmin && tahmin.indeks === indeks),
           evreGunu: uyg && uyg.evreId === ev.id ? yrGunFarki(uyg.evreTarihi) : NaN,
+          degisim: uyg && uyg.evreId === ev.id && (uyg.degisen || []).length ? uyg : null,
           sonrakiVar: indeks < pr.evreler.length - 1
         };
         durum.acik = acikOnce ? acikOnce.has(`yrEvre-${ev.id}`)
@@ -6949,11 +7010,15 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     const ORTAK_BITKI_OKUMA_MS = 60000;
     const ortakAyarDizisi = () => YR_CIHAZ_ALANLARI.map(([k]) => Math.round(Number(ayar[k])));
     async function ortakBitkiKaydiYayinla(p, y, deneme = 0) {
-      if (!p || !y || !p.komutKanal || !p.komutWriteKey) return;  // yazma anahtarı olmayan telefon yayınlayamaz
-      const kayit = { v: 1, c: (p.uzakEslesme && p.uzakEslesme.cihazId) || state.cihazId || '',
+      if (!p || !p.komutKanal || !p.komutWriteKey) return;  // yazma anahtarı olmayan telefon yayınlayamaz
+      const cihaz = (p.uzakEslesme && p.uzakEslesme.cihazId) || state.cihazId || '';
+      // V4.9.4: y === null → "bitki kaydı kaldırıldı" işareti (listede olmayan bitki için elle ayar)
+      const kayit = !y ? { v: 1, c: cihaz, temiz: 1, z: Math.floor(Date.now() / 1000) } : { v: 1, c: cihaz,
         b: y.bitkiId, p: y.profilId, e: y.evreId, t: String(y.tip || '').slice(0, 40), et: y.evreTarihi, bt: y.baslangicTarihi,
         k: y.katalogSurum, a: (y.gonderilen ? YR_CIHAZ_ALANLARI.map(([k]) => Math.round(Number(y.gonderilen[k]))) : ortakAyarDizisi()),
         z: Math.floor(Date.now() / 1000) };
+      // Elle değiştirilen koşullar: alan sıra numaraları (YR_CIHAZ_ALANLARI)
+      if (y && (y.degisen || []).length) kayit.m = y.degisen.map(k => YR_CIHAZ_ALANLARI.findIndex(x => x[0] === k)).filter(i => i >= 0);
       let metin = JSON.stringify(kayit);
       if (metin.length > 255) { kayit.t = ''; metin = JSON.stringify(kayit); }
       try {
@@ -6964,11 +7029,11 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         });
         const govde = (await res.text()).trim();
         if (!res.ok || !(parseInt(govde, 10) > 0)) throw new Error(govde === '0' ? 'oran' : `HTTP ${res.status}`);
-        y.ortakYayin = 'tamam';
+        if (y) y.ortakYayin = 'tamam';
       } catch (e) {
         // ThingSpeak aynı kanala 15 sn'de bir yazım kabul eder: bir kez bekleyip yeniden dene
         if (deneme < 2) { setTimeout(() => ortakBitkiKaydiYayinla(p, y, deneme + 1), 16000); return; }
-        y.ortakYayin = 'hata';
+        if (y) y.ortakYayin = 'hata';
       }
       yrProfilleriKaydet();
       yrAyarKartiniGuncelle();
@@ -6991,7 +7056,11 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         for (const fd of feeds) {  // eskiden yeniye
           if (fd.field1) komutFeed = fd;
           if (fd[ORTAK_BITKI_ALAN]) {
-            try { const k = JSON.parse(fd[ORTAK_BITKI_ALAN]); if (k && k.v === 1 && k.b && k.e) kayitFeed = { fd, k }; } catch (e) {}
+            try {
+              const k = JSON.parse(fd[ORTAK_BITKI_ALAN]);
+              if (k && k.v === 1 && k.temiz) kayitFeed = null;  // bitki kaydı kaldırılmış
+              else if (k && k.v === 1 && k.b && k.e) kayitFeed = { fd, k };
+            } catch (e) {}
           }
         }
         sonuc.sonKomutMs = komutFeed ? Date.parse(komutFeed.created_at) || 0 : 0;
@@ -7040,10 +7109,15 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       if (o && o.durum === 'gecersiz') return null;
       if (o && o.durum === 'gecerli' && o.kayit) {
         const k = o.kayit;
+        const kanalY = { bitkiId: k.b, profilId: k.p, evreId: k.e, tip: k.t || '', evreTarihi: k.et, baslangicTarihi: k.bt, katalogSurum: k.k, onayZamani: (k.z || 0) * 1000,
+          gonderilen: Array.isArray(k.a) ? Object.fromEntries(YR_CIHAZ_ALANLARI.map(([a], i) => [a, k.a[i]])) : null,
+          degisen: Array.isArray(k.m) ? k.m.map(i => (YR_CIHAZ_ALANLARI[i] || [])[0]).filter(Boolean) : [] };
+        // Kendi kaydı kanaldakinden yeniyse (ör. yayın başarısız, elle koşul değişikliği) kendisini göster
+        if (kendi && kendi.onayZamani > kanalY.onayZamani + 60000) {
+          if (kendi.gonderilen && ortakAyarUyuyorMu(YR_CIHAZ_ALANLARI.map(([a]) => Math.round(Number(kendi.gonderilen[a])))) === false) return null;
+          return yrKayitCoz(kendi) ? { y: kendi, kaynak: 'kendi' } : null;
+        }
         if (ortakAyarUyuyorMu(k.a) === false) return null;
-        const kanalY = { bitkiId: k.b, profilId: k.p, evreId: k.e, tip: k.t || '', evreTarihi: k.et, baslangicTarihi: k.bt, katalogSurum: k.k, onayZamani: (k.z || 0) * 1000 };
-        // Kendi kaydı kanaldakinden yeniyse (ör. yayın başarısız) kendisini göster
-        if (kendi && kendi.onayZamani > kanalY.onayZamani + 60000) return yrKayitCoz(kendi) ? { y: kendi, kaynak: 'kendi' } : null;
         return yrKayitCoz(kanalY) ? { y: kanalY, kaynak: 'kanal' } : null;
       }
       if (!kendi) return null;
