@@ -2996,7 +2996,10 @@ Ayd:78(05-20)  P:1013</pre>
       const kimlik = await kurulumKimligiAl();
       // V4.9: index.html bilgisayarda yerel dosya (file://) veya localhost olarak açılırsa yönetici simülasyonudur, kod istemez.
       // Android uygulamasında (Capacitor) ve internet adreslerinde geçerli değildir; oralarda lisans kuralı aynen işler.
-      if (!capYerelMi() && (location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname))) yoneticiSurumu = true;
+      // V4.9.6: Bu muafiyet yalnız geliştirici bilgisayarı ve COP31 gösterimi içindir. GitHub'a yayımlanan kopyada
+      // araclar/github_yayin.js bunu false yapar; yoksa sayfayı kaydedip dosya olarak açan biri kodsuz kullanırdı.
+      const YEREL_YONETICI_IZNI = false;
+      if (YEREL_YONETICI_IZNI && !capYerelMi() && (location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname))) yoneticiSurumu = true;
       if (yoneticiSurumu) {  // V4.5: geliştiricinin kendi APK'si
         lisansBilgisi = { ad: 'Yönetici', bitis: '0', kimlik, yonetici: true };
         const etiket = document.getElementById('surumEtiketi');
