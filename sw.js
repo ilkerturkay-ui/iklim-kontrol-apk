@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iklim-kontrol-cache-v23';  // V4.9.6 (Rehber'de oda seçici geri geldi; önceki: V4.9.5 Ayarlar sadeleştirme, görsel denetim paketleri 1-8; önceki: V4.9.4 rehber koşul değişikliği, V4.9.3 Yetiştirme Rehberi, katalog dosyası, İngilizce sözlükler)
+const CACHE_NAME = 'iklim-kontrol-cache-v24';  // V4.9.7 (kullanım şartları, öğrenci bağlantısı, COP31 ziyaretçi sürümü; önceki: V4.9.6 Rehber'de oda seçici geri geldi; önceki: V4.9.5 Ayarlar sadeleştirme, görsel denetim paketleri 1-8; önceki: V4.9.4 rehber koşul değişikliği, V4.9.3 Yetiştirme Rehberi, katalog dosyası, İngilizce sözlükler)
 const ASSETS = [
   './',
   './index.html',
