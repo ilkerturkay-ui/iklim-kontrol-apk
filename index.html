@@ -3007,7 +3007,8 @@ Ayd:78(05-20)  P:1013</pre>
       const readKey = (document.getElementById('cfgReadKey').value || '').trim();
       const bitis = Date.now() + UZAK_ONAY_BEKLEME_MS;
       while (Date.now() < bitis) {
-        await new Promise(r => setTimeout(r, 20000));
+        // V4.9.8: 20 sn -> 10 sn. Firmware V4.7.6 hızlı modunda onay ~40 sn içinde buluta çıkar; olağan modda (2 dk) da zararsızdır.
+        await new Promise(r => setTimeout(r, 10000));
         try {
           let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/feeds.json?results=3&status=true`;
           if (readKey) url += `&api_key=${encodeURIComponent(readKey)}`;
