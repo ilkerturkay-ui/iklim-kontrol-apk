@@ -4152,7 +4152,9 @@ Ayd:78(05-20)  P:1013</pre>
       const agMetni = demo ? ayar.ssid : (state.cihazAg || '(bilinmiyor)');
       const dilim = state.lcdSlice % 3;
       const agSatiri = agMetni.length <= 17 ? `Ag:${agMetni}` : agMetni;
-      const s0 = dilim === 0 ? ipMetni : (dilim === 1 ? agSatiri : `${ayar.mdnsAdi}.local`);
+      let s0 = dilim === 0 ? ipMetni : (dilim === 1 ? agSatiri : `${ayar.mdnsAdi}.local`);
+      // V4.9.9: ziyaretçi kopyasında gerçek IP/ağ adı gösterilmez (aracı da bunları göndermez); sabit, zararsız metinler dönüşür
+      if (ziyaretciMi() && !demo) s0 = ['COP31 - LIVE VIEW', 'READ-ONLY VIEW', 'Plant Growth Room'][dilim];
       // V4.9 (firmware 4.7.4 ile aynı): ilk satır 20 sütunda ortalanır
       const s0Kes = s0.slice(0, 20);
       const row0 = formatLcd20(' '.repeat(Math.floor((20 - s0Kes.length) / 2)) + s0Kes);
