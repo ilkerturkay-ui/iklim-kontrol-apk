@@ -3312,7 +3312,7 @@ Ayd:78(05-20)  P:1013</pre>
       const ayarDugme = document.getElementById('nav-settings');
       if (ayarDugme) { ayarDugme.onclick = ziyaretciAyarBilgisi; ayarDugme.setAttribute('aria-disabled', 'true'); }
       const o = DEFAULT_PROFILES[0];
-      profiles = [{ ...o, id: 'oda1', name: '🌱 Live room: plant growth chamber (home lab)', tsReadKey: '', tsWriteKey: '', komutKanal: undefined, komutWriteKey: undefined, komutReadKey: undefined, uzakEslesme: undefined }];
+      profiles = [{ ...o, id: 'oda1', name: '🌱 Live room: plant growth chamber (home lab)', tsReadKey: '', tsWriteKey: '', komutKanal: ziyaretciCanliMi() ? 'komut' : undefined, komutWriteKey: undefined, komutReadKey: undefined, uzakEslesme: undefined }];
       currentProfileId = 'oda1';
       applyProfileToAyar('oda1');
       renderProfileSelector();
@@ -7748,7 +7748,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       ortakOkumaSonMs = Date.now();
       const sonuc = { okumaMs: Date.now(), durum: 'okunamadi', kayit: null, sonKomutMs: 0, sebep: '' };
       try {
-        let url = `https://api.thingspeak.com/channels/${encodeURIComponent(p.komutKanal)}/feeds.json?results=10`;
+        let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(p.komutKanal)}/feeds.json?results=10`;  // ziyaretçide 'komut' takma adı: aracı yalnız bitki kaydını verir
         if (p.komutReadKey) url += `&api_key=${encodeURIComponent(p.komutReadKey)}`;
         const res = await fetch(url, { cache: 'no-store' });
         const govde = (await res.text()).trim();
@@ -7783,7 +7783,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         const chId = (document.getElementById('cfgChannelId').value || '').trim();
         const readKey = (document.getElementById('cfgReadKey').value || '').trim();
         if (chId) {
-          let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/feeds.json?results=3&status=true`;
+          let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(chId)}/feeds.json?results=3&status=true`;
           if (readKey) url += `&api_key=${encodeURIComponent(readKey)}`;
           const data = await (await fetch(url, { cache: 'no-store' })).json();
           let oz = null;
