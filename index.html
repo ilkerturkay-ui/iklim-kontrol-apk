@@ -441,6 +441,11 @@
     #standMarka, #standUst, #standQr, #standGeriDon, #standQrBuyuk { display: none; }
     /* V4.9.9: COP31 ziyaretçi kopyası (salt okunur): Ayarlar, oda/kaynak seçimi ve ses düğmesi yok */
     html.ziyaretci #kaynakSatiri, html.ziyaretci #profilSatiri, html.ziyaretci #btnSound { display: none !important; }
+    /* Ziyaretçide dil düğmesi satırın solundan başlar; içinde bayrak ve dilin adı yazar (diğer düğmeler sağda kalır) */
+    html.ziyaretci #ustEylemler { margin-left: 0; width: 100%; }
+    html.ziyaretci #btnDil:not(.hidden) { margin-right: auto; display: inline-flex; align-items: center; gap: 6px; }
+    .dil-bayrak { display: inline-flex; flex: none; }
+    .dil-bayrak svg { display: block; width: 21px; height: 14px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4); }
     html.ziyaretci #nav-settings { opacity: 0.4; }  /* Ayarlar simgesi yerinde kalır ama devre dışı görünür; dokununca bilgi penceresi açılır */
     #ziyaretciAyarPenceresi { position: fixed; inset: 0; z-index: 200000; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; padding: 16px; }
     html.stand, html.stand body { height: 100%; overflow: hidden; }
@@ -8324,6 +8329,23 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       try { yrKatalogBilgisiniYaz(); bitkiSatiriniGuncelle(); yrAyarKartiniGuncelle(); if (yrAcikMi()) yrCiz(); } catch (e) {}
     }
 
+    // Düğme, geçilecek dili gösterir. Ziyaretçi kopyasında bayrak (SVG: Windows dahil her yerde görünür) ve dilin adı yazılır;
+    // diğer kopyalarda eskisi gibi "🌐 TR" / "🌐 EN".
+    const DIL_BAYRAK = {
+      tr: '<svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="19.4,10 16.7,10.9 16.9,13.8 15.1,11.5 12.3,12.4 13.9,10 12.3,7.6 15.1,8.5 16.9,6.2 16.7,9.1"/></svg>',
+      en: '<svg viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/></svg>'
+    };
+    function dilDugmeYaz() {
+      const d = document.getElementById('btnDil');
+      if (!d) return;
+      const hedef = dilAktif === 'en' ? 'tr' : 'en';
+      d.title = hedef === 'tr' ? 'Türkçe' : 'English';
+      if (typeof ziyaretciMi === 'function' && ziyaretciMi()) {
+        d.innerHTML = `<span class="dil-bayrak">${DIL_BAYRAK[hedef]}</span><span>${hedef === 'tr' ? 'Türkçe' : 'English'}</span>`;
+      } else {
+        d.textContent = hedef === 'tr' ? '🌐 TR' : '🌐 EN';
+      }
+    }
     async function dilUygula(dil) {
       const d = document.getElementById('btnDil');
       if (dil === 'en') {
@@ -8342,7 +8364,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         dilGeriAl();
       }
       dilKatalogYenile();
-      if (d) { d.textContent = dilAktif === 'en' ? '🌐 TR' : '🌐 EN'; d.title = dilAktif === 'en' ? 'Türkçe' : 'English'; }
+      dilDugmeYaz();
       try { renderAllCharts(); } catch (e) {}  // grafik tuvalindeki yazılar
     }
 
@@ -8355,6 +8377,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     function dilBaslat() {  // lisansKapisi: yalnız Yönetici APK'sında çağrılır
       const d = document.getElementById('btnDil');
       if (d) d.classList.remove('hidden');
+      dilDugmeYaz();
       let tercih = null;
       try { tercih = localStorage.getItem(DIL_DEPO); } catch (e) {}
       // V4.9.8: stand düzeninde (yatay geniş ekran) kayıtlı dil tercihi yoksa İngilizce başlar; düğmeyle Türkçeye dönülür
