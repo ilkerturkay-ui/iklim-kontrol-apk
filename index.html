@@ -439,6 +439,8 @@
        %100/%125/%150 olsa da 16:10 ve 16:9 ekranda aynı oranlar korunur. Telefon düzeni DEĞİŞMEZ.
        ========================================================================== */
     #standMarka, #standUst, #standQr, #standGeriDon, #standQrBuyuk { display: none; }
+    /* V4.9.9: COP31 ziyaretçi kopyası (salt okunur): Ayarlar, oda/kaynak seçimi ve ses düğmesi yok */
+    html.ziyaretci #nav-settings, html.ziyaretci #kaynakSatiri, html.ziyaretci #profilSatiri, html.ziyaretci #btnSound { display: none !important; }
     html.stand, html.stand body { height: 100%; overflow: hidden; }
     html.stand body { padding: 0 !important; }
     html.stand #appShell {
@@ -2618,12 +2620,16 @@ Ayd:78(05-20)  P:1013</pre>
     }
     // Yaş zamanla değişir; ThingSpeak izlenirken veriyi de yenile (sekme açıkken, demo dışında)
     setInterval(updateVeriDurumu, 30000);
+    let canliTik = 0;
     setInterval(() => {
+      // V4.9.9: ziyaretçi kopyası 30 sn'de bir yeniler (sunucudaki aracı önbellekten yanıtlar); diğerleri 2 dk'da bir
+      canliTik++;
+      if (!ziyaretciMi() && canliTik % 4) return;
       // V4.7: etkinleştirilmemiş kopya canlı veri çekmez (bkz. canliVeriyiBaslat)
       if (lisansBilgisi && document.visibilityState === 'visible' && state.dataSource === 'thingspeak' && state.activeTab !== 'sim') {
         fetchThingSpeakLive();
       }
-    }, 120000);
+    }, 30000);
 
 
     // ============================================================================
@@ -2806,6 +2812,7 @@ Ayd:78(05-20)  P:1013</pre>
     }
 
     async function uzakEslestir() {
+      if (ziyaretciMi()) return;
       const p = aktifProfil();
       if (!p) return;
       if (!uzakKriptoVarMi()) { updateUzakDurumUI(); return; }
@@ -2928,6 +2935,7 @@ Ayd:78(05-20)  P:1013</pre>
     // V4.8: secenek = { baslik, ozetHtml } (Yetiştirme Rehberi değer tablosunu kendi onay penceresinde gösterir).
     // Dönüş: komut yazıldıysa { yuva, sira, onay: Promise<'ack'|'red'|'zaman'> }, aksi halde null.
     async function pushSettingsRemote(secenek = {}) {
+      if (ziyaretciMi()) return null;  // ziyaretçi kopyası salt okunur
       const p = aktifProfil();
       if (!uzakKriptoVarMi()) { updateUzakDurumUI(); return null; }
       if (Date.now() < uzakPinKilitMs) {
@@ -3268,6 +3276,21 @@ Ayd:78(05-20)  P:1013</pre>
     }
 
     // Açılışta çağrılır. Geçerli lisans yoksa tam ekran etkinleştirme penceresi uygulamanın üstünü kapatır.
+    // V4.9.9: COP31 ziyaretçi kopyası SALT OKUNURDUR. Okuma, sunucudaki aracı (relay) üzerinden /ts/ yolundan yapılır;
+    // ThingSpeak anahtarı yalnız sunucuda durur. Bu kopyada yazma/komut anahtarı, Ayarlar sayfası, yerel Wi-Fi ve ses yoktur.
+    function ziyaretciMi() { return !!(lisansBilgisi && lisansBilgisi.ziyaretci); }
+    function ziyaretciCanliMi() { return ziyaretciMi() && /^https?:$/.test(location.protocol); }
+    function tsOkumaTabani() { return ziyaretciCanliMi() ? location.origin + '/ts' : 'https://api.thingspeak.com'; }
+    function ziyaretciKur() {
+      document.documentElement.classList.add('ziyaretci');
+      const o = DEFAULT_PROFILES[0];
+      profiles = [{ ...o, id: 'oda1', name: '🌱 Live room: plant growth chamber (home lab)', tsReadKey: '', tsWriteKey: '', komutKanal: undefined, komutWriteKey: undefined, komutReadKey: undefined, uzakEslesme: undefined }];
+      currentProfileId = 'oda1';
+      applyProfileToAyar('oda1');
+      renderProfileSelector();
+      soundEnabled = false;  // ziyaretçi telefonlarında alarm sireni çalmasın
+      state.dataSource = 'thingspeak';
+    }
     async function lisansKapisi() {
       const kimlik = await kurulumKimligiAl();
       // V4.9: index.html bilgisayarda yerel dosya (file://) veya localhost olarak açılırsa yönetici simülasyonudur, kod istemez.
@@ -3284,9 +3307,15 @@ Ayd:78(05-20)  P:1013</pre>
         const etiket = document.getElementById('surumEtiketi');
         if (etiket) etiket.textContent = 'v4.9.9 · COP31';
         try { if (!localStorage.getItem(DIL_DEPO)) localStorage.setItem(DIL_DEPO, 'en'); } catch (e) {}
+        ziyaretciKur();
         dilBaslat();
         lisansSatiriniGuncelle();
-        switchTab('sim');
+        if (ziyaretciCanliMi()) {  // sunucuda: evdeki odanın canlı verisi (salt okunur), Panel ile açılır
+          switchTab('dashboard');
+          canliVeriyiBaslat();
+        } else {  // dosyadan açıldıysa aracı yoktur: Demo
+          switchTab('sim');
+        }
         return;
       }
       if (yoneticiSurumu) {  // V4.5: geliştiricinin kendi APK'si
@@ -4517,7 +4546,7 @@ Ayd:78(05-20)  P:1013</pre>
       if (!zorla && dliGecmis.kanal === chId && Date.now() - dliGecmis.alinmaMs < 10 * 60000) return;
       dliGecmis.yukleniyor = true;
       try {
-        let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/fields/4.json?minutes=1500`;
+        let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(chId)}/fields/4.json?minutes=1500`;
         if (p.tsReadKey) url += `&api_key=${encodeURIComponent(p.tsReadKey)}`;
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -5277,6 +5306,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
 
     // Oturumlu POST: anahtar yoksa giriş ister; oturum düşmüşse bir kez yeniden giriş yapıp tekrarlar.
     async function devicePost(path, params) {
+      if (ziyaretciMi()) throw new Error('Read-only visitor copy.');
       const host = getLocalHost();
       for (let deneme = 0; deneme < 2; deneme++) {
         if (!state.cihazOturum || state.cihazOturumHost !== host) await deviceLogin(host);
@@ -5304,6 +5334,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     };
 
     async function pushSettingsToLocalDevice() {
+      if (ziyaretciMi()) return false;  // ziyaretçi kopyası salt okunur
       if ((!state.localWifiConnected || state.dataSource !== 'local') && uzakHazirMi()) {
         return pushSettingsRemote();  // V4.3
       }
@@ -5548,7 +5579,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       }
 
       statusEl.innerHTML = `<span class="text-amber-500 font-semibold">⏳ ThingSpeak sunucusundan kanal (#${esc(chId)}) verileri çekiliyor...</span>`;
-      let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/feeds.json?results=${encodeURIComponent(results)}&status=true`;
+      let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(chId)}/feeds.json?results=${encodeURIComponent(results)}&status=true`;
       if (readKey) url += `&api_key=${encodeURIComponent(readKey)}`;
       if (baslangicMs) url += `&start=${new Date(baslangicMs).toISOString().slice(0, 19).replace('T', '%20')}`;
 
@@ -6695,7 +6726,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     // simülasyona döner; Demo'dan çıkınca gerçek veri yeniden bağlanır (switchTab).
     // Kaydırma YOK: sürgü/giriş/seçim/grafik üzerinde, yatay kaydırılabilen alanlarda, açık pencerelerde,
     // çok parmakla dokunuşta ve ağırlıklı dikey harekette (sayfayı aşağı kaydırma).
-    const KAYDIRMA_SIRASI = ['dashboard', 'expert', 'charts', 'rehber', 'sim', 'settings'];  // V4.9.2: alt bandla aynı sıra (Demo dahil)
+    const KAYDIRMA_SIRASI = ['dashboard', 'expert', 'charts', 'rehber', 'sim', 'settings'];  // ziyaretçide 'settings' switchTab'da Panel'e çevrilir  // V4.9.2: alt bandla aynı sıra (Demo dahil)
     const KAYDIRMA_ESIK_PX = 70;      // en az yatay mesafe
     const KAYDIRMA_ORAN = 1.8;        // yatay hareket, dikeyin en az bu kadar katı olmalı
     const KAYDIRMA_SURE_MS = 700;     // daha yavaş hareketler "sürükleme/seçme" sayılır
@@ -6766,6 +6797,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
 
     // koruKonum: true ise (yalnız kaydırarak geçişte) dikey kaydırma seviyesi sıfırlanmaz; alt banttaki düğmeler en üste döner.
     function switchTab(tabName, koruKonum) {
+      if (tabName === 'settings' && ziyaretciMi()) tabName = 'dashboard';  // ziyaretçi kopyasında Ayarlar yok
       const prevTab = state.activeTab;
       const konum = {
         vp: (document.getElementById('mainViewport') || {}).scrollTop || 0,
