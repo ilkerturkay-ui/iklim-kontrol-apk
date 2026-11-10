@@ -1,52 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="DENET">
+  <title>DENET</title>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0B3A4A"/>
-      <stop offset="1" stop-color="#0A7A5E"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.46" r="0.5">
-      <stop offset="0" stop-color="#5EEAD4" stop-opacity="0.24"/>
-      <stop offset="1" stop-color="#5EEAD4" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="leafL" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#E6FF9E"/>
-      <stop offset="1" stop-color="#9BE15D"/>
-    </linearGradient>
-    <linearGradient id="leafR" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#5BE37D"/>
-      <stop offset="1" stop-color="#16A35A"/>
-    </linearGradient>
-    <linearGradient id="drop" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#A5ECFF"/>
-      <stop offset="1" stop-color="#1F9FE8"/>
-    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B3A4A"/><stop offset="1" stop-color="#0A7A5E"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.46" r="0.5"><stop offset="0" stop-color="#5EEAD4" stop-opacity="0.26"/><stop offset="1" stop-color="#5EEAD4" stop-opacity="0"/></radialGradient>
+    <linearGradient id="net" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6FF9E"/><stop offset="1" stop-color="#8FE060"/></linearGradient>
   </defs>
-
-  <!-- Arka plan: derin camgobegi -> zumrut -->
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <circle cx="256" cy="256" r="200" fill="url(#glow)"/>
-
-  <!-- Kompozisyon: guvenli daire (r=170) icinde ortalanmis -->
-  <g transform="translate(256 256) scale(0.94) translate(-232 -254)">
-  <!-- Yaprak + termometre (45 derece egik, ucu sag-uste) -->
-  <g transform="translate(-14 -14) rotate(45 256 256)">
-    <path d="M256 100C352 160 360 292 256 380C152 292 160 160 256 100Z" fill="url(#leafR)"/>
-    <path d="M256 100C160 160 152 292 256 380Z" fill="url(#leafL)"/>
-    <!-- Yan damarlar = olcek cizgileri -->
-    <g stroke="#0B3A4A" stroke-width="12" stroke-linecap="round" stroke-opacity="0.32" fill="none">
-      <path d="M240 212L208 188M240 262L206 238M240 312L212 290"/>
-      <path d="M272 212L304 188M272 262L306 238M272 312L300 290"/>
-    </g>
-    <!-- Termometre borusu (orta damar) -->
-    <path d="M256 158V384" stroke="#0B3A4A" stroke-width="32" stroke-linecap="round"/>
-    <circle cx="256" cy="388" r="38" fill="#0B3A4A"/>
-    <!-- Civa -->
-    <path d="M256 388V246" stroke="#FF6A3D" stroke-width="13" stroke-linecap="round"/>
-    <circle cx="256" cy="388" r="25" fill="#FF6A3D"/>
-  </g>
-
-  <!-- Nem damlasi -->
-  <path d="M326 300C338 318 354 334 354 356A28 28 0 0 1 298 356C298 334 314 318 326 300Z" fill="url(#drop)"/>
-  <path d="M310 357A16 16 0 0 0 322 372" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round" stroke-opacity="0.75"/>
-  </g>
+  <circle cx="256" cy="256" r="220" fill="url(#glow)"/>
+  <path d="M197.2529296875 243.0C235.2978515625 243.0 259.4013671875 219.568359375 259.4013671875 180.515625C259.4013671875 141.37890625 235.2978515625 117.86328125 196.7490234375 117.86328125H149.0458984375V243.0ZM182.9755859375 214.109375V146.75390625H194.9013671875C214.5537109375 146.75390625 225.3037109375 154.3125 225.3037109375 180.515625C225.3037109375 206.634765625 214.5537109375 214.109375 195.9091796875 214.109375Z M273.6787109375 243.0H363.5419921875V215.62109375H307.6083984375V193.11328125H359.1748046875V166.40625H307.6083984375V145.2421875H363.8779296875V117.86328125H273.6787109375Z" fill="#FFFFFF"/>
+  <path d="M85.8056640625 394.13671875H120.7431640625V348.44921875C120.7431640625 340.21875 119.8193359375 326.4453125 118.8115234375 312.083984375C124.8583984375 326.109375 129.4775390625 335.68359375 137.2880859375 348.44921875L165.0869140625 394.13671875H202.0400390625V269.0H167.1025390625V314.85546875C167.1025390625 324.09375 168.1943359375 339.37890625 169.0341796875 352.14453125C163.9111328125 338.03515625 158.8720703125 328.4609375 152.5732421875 318.130859375L122.7587890625 269.0H85.8056640625Z M218.5009765625 394.13671875H308.3642578125V366.7578125H252.4306640625V344.25H303.9970703125V317.54296875H252.4306640625V296.37890625H308.7001953125V269.0H218.5009765625Z M320.8779296875 296.37890625H358.2509765625V394.13671875H392.1806640625V296.37890625H429.5537109375V269.0H320.8779296875Z" fill="url(#net)"/>
 </svg>

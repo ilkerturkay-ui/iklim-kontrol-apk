@@ -5,7 +5,8 @@
 // bitki kataloğu (Yetiştirme Rehberi verileri) henüz Türkçedir.
 window.DIL_EN = [
   // ---- Başlık, üst bant ----------------------------------------------------------------------
-  ["Bitki Büyütme Odası İklim Kontrol Platformu", "Plant Growth Room Climate Control Platform"],
+  ["DENET · Kontrollü Ortam Tarımı İklim Kontrol Platformu", "DENET · Controlled Environment Agriculture Climate Control Platform"],
+  ["Kontrollü Ortam Tarımı İklim Kontrol Platformu", "Controlled Environment Agriculture Climate Control Platform"],
   // ---- V4.9.9: ziyaretçi kopyasında kapalı Ayarlar penceresi ----
   ["Ayarlar bu görünümde kapalı", "Settings are not available here"],
   ["Burası canlı bir iklim odasının salt okunur ziyaretçi görünümü olduğu için ayarlar sayfası kapalıdır.", "This is a read-only visitor view of a live climate-control room, so the settings page is closed."],
@@ -115,7 +116,7 @@ window.DIL_EN = [
   ["Bildirim & Ses Testi", "Notification & Sound Test"],
   ["Temizle", "Clear"],
   ["Henüz kayıtlı uyarı bildirimi yok.", "No alert notifications recorded yet."],
-  ["İklim Kontrol Test Bildirimi", "Climate Control Test Notification"],
+  ["DENET Test Bildirimi", "DENET Test Notification"],
   ["Sesli ve görsel erken uyarı sistemi aktif. VPD: # kPa, T1: #°C", "Audible and visual early warning system active. VPD: # kPa, T1: #°C"],
 
   // ---- Özet panel ------------------------------------------------------------------------------
@@ -987,7 +988,7 @@ window.DIL_EN = [
 
   // ==== 2. TUR: KILAVUZ SEKMESİ (anahtarlar sayfadaki HTML; etiketler eşleştirmede yok sayılır) ====
   [`<span class="text-xs font-bold uppercase tracking-wider bg-white/15 px-2.5 py-0.5 rounded-full">Adım Adım Rehber</span> <span class="text-lg">📘</span>`, `<span class="text-xs font-bold uppercase tracking-wider bg-white/15 px-2.5 py-0.5 rounded-full">Step-by-Step Guide</span> <span class="text-lg">📘</span>`],
-  [`İklim Kontrol Platformu Kullanım Kılavuzu`, `Climate Control Platform User Manual`],
+  [`DENET Kullanım Kılavuzu`, `DENET User Manual`],
   [`Bu kılavuz, konuyu hiç bilmeyen birinin de uygulamayı rahatça kullanabilmesi için yazıldı. Bir başlığa dokunun; içeriği açılır. Yeniyseniz <b>"Hızlı Başlangıç"</b> ile başlayın.`, `This manual is written so that even someone with no background can use the app comfortably. Tap a heading to open its content. If you are new, start with <b>"Quick Start"</b>.`],
   [`İçindekiler`, `Contents`],
   [`Hızlı Başlangıç (5 adımda kullanmaya başlayın)`, `Quick Start (get going in 5 steps)`],
@@ -1023,7 +1024,7 @@ window.DIL_EN = [
   [`Uygulamayı kurma`, `Installing the app`],
   [`Etkinleştirme`, `Activation`],
   [`Etkinleştirme bir kez yapılır. Kimin adına ve hangi tarihe kadar etkinleştirildiğini <b>Ayarlar</b> sekmesinin en üstünde görebilirsiniz.`, `Activation is done once. You can see for whom and until when the app is activated at the top of the <b>Settings</b> tab.`],
-  [`🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v5.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.`, `🛡️ <b>Admin version:</b> A separate APK the developer uses on their own phone (it appears on the home screen as <b>"İklim Yönetici"</b>). It needs no code; the header shows <b>"v5.0 · Admin"</b>. This APK stays with the developer and is not distributed to students.`],
+  [`🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"DENET Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v5.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.`, `🛡️ <b>Admin version:</b> A separate APK the developer uses on their own phone (it appears on the home screen as <b>"DENET Yönetici"</b>). It needs no code; the header shows <b>"v5.0 · Admin"</b>. This APK stays with the developer and is not distributed to students.`],
   [`⚠️ <b>Yeni kod gereken durumlar:</b> telefonunuzu değiştirdiğinizde, telefonu fabrika ayarlarına döndürdüğünüzde veya kodun bitiş tarihi geçtiğinde. Bu durumlarda ekrandaki yeni Kurulum Kimliği'ni geliştiriciye yeniden gönderin.`, `⚠️ <b>When a new code is needed:</b> when you change your phone, reset it to factory settings, or the code's expiry date has passed. In these cases send the new Installation ID shown on the screen to the developer again.`],
   [`Üstteki yeşil bant`, `The green bar at the top`],
   [`Renkli şeritler`, `Coloured strips`],
@@ -1071,12 +1072,12 @@ window.DIL_EN = [
   [`Widget ekleme`, `Adding the widget`],
   [`Uyarı aralıklarını belirleme`, `Setting alert ranges`],
   [`Widget'taki <b>⚙</b> düğmesine dokunun. Her değer için uyarıyı açıp kapatabilir, <b>alt</b> ve <b>üst</b> sınırı yazabilirsiniz: sıcaklık, nem, VPD, <b>fungal risk</b> (çiğ farkı alt sınırın altına inince), ışık ve basınç. Ayrıca "kaç dakika veri gelmezse uyar" süresini ayarlayabilirsiniz.`, `Tap the <b>⚙</b> button on the widget. For each value you can turn the alert on or off and enter the <b>lower</b> and <b>upper</b> limits: temperature, humidity, VPD, <b>fungal risk</b> (when the dew gap falls below the lower limit), light and pressure. You can also set "alert if no data for how many minutes".`],
-  [`⚠️ <b>Bildirim gelmiyorsa:</b> Xiaomi, Huawei, Samsung gibi telefonlar arka plandaki uygulamaları durdurabilir. Telefon <b>Ayarlar → Uygulamalar → İklim Kontrol → Pil</b> bölümünden <b>"Kısıtlama yok"</b> seçin ve bildirim iznini açın.`, `⚠️ <b>If notifications do not arrive:</b> Phones such as Xiaomi, Huawei and Samsung may stop apps in the background. In the phone's <b>Settings → Apps → İklim Kontrol → Battery</b>, choose <b>"No restrictions"</b> and allow notifications.`],
+  [`⚠️ <b>Bildirim gelmiyorsa:</b> Xiaomi, Huawei, Samsung gibi telefonlar arka plandaki uygulamaları durdurabilir. Telefon <b>Ayarlar → Uygulamalar → DENET → Pil</b> bölümünden <b>"Kısıtlama yok"</b> seçin ve bildirim iznini açın.`, `⚠️ <b>If notifications do not arrive:</b> Phones such as Xiaomi, Huawei and Samsung may stop apps in the background. In the phone's <b>Settings → Apps → DENET → Battery</b>, choose <b>"No restrictions"</b> and allow notifications.`],
   [`Ekranın 4 satırı`, `The 4 lines of the screen`],
   [`Düğme (FLASH)`, `Button (FLASH)`],
   [`<b>Demo</b> sekmesinde sürgüleri kaydırarak veya <b>Hızlı Senaryo</b> düğmelerine basarak (düşük nem, fungal risk, aşırı sıcak, sensör arızası…) sistemin nasıl tepki verdiğini <b>güvenle</b> deneyebilirsiniz. Gerçek cihaza hiçbir şey gönderilmez. Demo'dan çıkınca uygulama gerçek verilere döner.`, `In the <b>Demo</b> tab you can <b>safely</b> try how the system reacts by moving the sliders or tapping the <b>Quick Scenario</b> buttons (low humidity, fungal risk, overheating, sensor fault…). Nothing is sent to the real device. When you leave Demo, the app returns to real data.`],
   [`Birden fazla cihazınız varsa <b>Ayarlar → Kurulum → Çoklu İklim Odası</b> bölümünden <b>➕ Yeni Oda Ekle</b> ile her biri için ayrı profil açın; kanal bilgilerini girip <b>Profili Kaydet</b>'e dokunun. Üstteki oda seçiciden aralarında geçiş yaparsınız. Uzaktan ayar eşleştirmesi her oda için ayrıdır.`, `If you have more than one device, create a separate profile for each with <b>➕ Add New Room</b> in <b>Settings → Setup → Multiple Climate Rooms</b>; enter the channel details and tap <b>Save Profile</b>. Switch between them with the room selector at the top. Remote settings pairing is separate for each room.`],
-  [`<b>İklim Kontrol Platformu</b> — mobil uygulama sürüm <b>5.0</b>`, `<b>Climate Control Platform</b> — mobile app version <b>5.0</b>`],
+  [`<b>DENET</b> — Kontrollü Ortam Tarımı İklim Kontrol Platformu — mobil uygulama sürüm <b>5.0</b>`, `<b>DENET</b> — Controlled Environment Agriculture Climate Control Platform — mobile app version <b>5.0</b>`],
   [`Uzaktan ayar ve çoklu telefon özellikleri için cihaz yazılımının (firmware) <b>V4.5</b> veya üstü olması gerekir.`, `Remote settings and multi-phone features require device firmware <b>V4.5</b> or later.`],
   [`<b>Uygulamayı etkinleştirin.</b> İlk açılışta çıkan <b>Kurulum Kimliği</b>ni geliştiriciye gönderin, size gelen kodu yapıştırıp <b>Etkinleştir</b>'e dokunun. (Ayrıntı: "Kurulum ve Etkinleştirme")`, `<b>Activate the app.</b> Send the <b>Installation ID</b> shown at first start to the developer, paste the code you receive and tap <b>Activate</b>. (Details: "Installation and Activation")`],
   [`<b>Kanal bilgilerinizi girin.</b> Alttan <b>Ayarlar</b> sekmesine geçin. "Kurulum → ThingSpeak Bulut Bağlantısı" bölümüne <b>Kanal ID</b> ve <b>Okuma Anahtarı (Read API Key)</b> değerlerini yazın. Bu bilgileri genellikle size sorumlu kişi verir.`, `<b>Enter your channel details.</b> Go to the <b>Settings</b> tab at the bottom. In the "Setup → ThingSpeak Cloud Connection" section enter the <b>Channel ID</b> and <b>Read API Key</b>. These are usually given to you by the person in charge.`],
@@ -1179,7 +1180,7 @@ window.DIL_EN = [
   [`<b>Uygulama kapalıyken uyarı</b> almak için <b>ana ekran widget'ını</b> kullanın (sonraki bölüm).`, `To get <b>alerts while the app is closed</b>, use the <b>home screen widget</b> (next section).`],
   [`Uygulamayı <b>bir kez açın</b> (etkinleştirilmiş olmalı ve kanal bilgileri girilmiş olmalı).`, `<b>Open the app once</b> (it must be activated and the channel details entered).`],
   [`Ana ekranda boş bir yere <b>parmağınızı basılı tutun</b> → <b>Widget'lar</b>.`, `<b>Press and hold</b> an empty spot on the home screen → <b>Widgets</b>.`],
-  [`Listede <b>İklim Kontrol</b>'ü bulun, widget'ı ana ekrana sürükleyin.`, `Find <b>İklim Kontrol</b> in the list and drag the widget to the home screen.`],
+  [`Listede <b>DENET</b>'i bulun, widget'ı ana ekrana sürükleyin.`, `Find <b>DENET</b> in the list and drag the widget to the home screen.`],
   [`Açılan ayar ekranında <b>Bildirim izni ver</b> ve <b>Pil kısıtlamasını kaldır</b>'a dokunun, sonra <b>Kaydet</b>.`, `On the settings screen that opens, tap <b>Allow notifications</b> and <b>Remove battery restriction</b>, then <b>Save</b>.`],
   [`Widget'ta <b>kırmızı</b> görünen değer sınır dışındadır. <b>↻</b> hemen yeniler.`, `A value shown in <b>red</b> on the widget is out of range. <b>↻</b> refreshes immediately.`],
   [`Uyarı başladığında bir bildirim gelir; devam ederse 3 saatte bir hatırlatılır; düzelince "✅ Düzeldi" bildirimi gelir.`, `When an alert starts you get a notification; if it continues you are reminded every 3 hours; when it clears you get a "✅ Resolved" notification.`],
