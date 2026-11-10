@@ -6,11 +6,16 @@
 window.DIL_EN = [
   // ---- Başlık, üst bant ----------------------------------------------------------------------
   ["Bitki Büyütme Odası İklim Kontrol Platformu", "Plant Growth Room Climate Control Platform"],
+  // ---- V4.9.9: taşıma (yalnız Yönetici sürümü) ----
+  ["<b>Başka tarayıcıya taşıma:</b> Bütün odalar, anahtarlar ve cihaz eşleşmesi tek dosyada aktarılır. Dosya gizli anahtar içerir; kimseyle paylaşmayın, işiniz bitince silin.", "<b>Moving to another browser:</b> All rooms, keys and the device pairing are transferred in one file. The file contains secret keys; do not share it and delete it when you are done."],
+  ["Tüm Veriyi Dışa Aktar", "Export All Data"],
+  ["Tüm Veriyi İçe Aktar", "Import All Data"],
+  ["Dosyada <b># oda</b> var. Bu tarayıcıdaki odalar ve ayarlar dosyadakilerle <b>değiştirilecek</b>; ardından sayfa yeniden açılacak.", "The file contains <b>#</b> room(s). The rooms and settings in this browser will be <b>replaced</b> with those in the file; the page will then reload."],
+  ["İçe Aktar", "Import"],
   // ---- V4.9.8: stand düzeni (yatay geniş ekran) ----
   ["İklim Kontrol Platformu", "Climate Control Platform"],
   ["Çift sensörlü bitki büyütme odası otomasyonu", "Dual-sensor plant growth room automation"],
   ["Telefonunuzda açın", "Open on your phone"],
-  ["Kare kodu kameranızla okutun", "Scan the QR code with your camera"],
   ["Kare kodu büyüt", "Enlarge QR code"],
   ["Kare kod", "QR code"],
   ["Kapatmak için dokunun", "Tap to close"],
@@ -51,7 +56,7 @@ window.DIL_EN = [
   ["Mod: Sera (Şeffaf, LDR Kontrollü)", "Mode: Greenhouse (Transparent, LDR-Controlled)"],
   ["Mod: Bitki Büyütme Odası (Kapalı)", "Mode: Plant Growth Room (Closed)"],
   ["Mod: #", "Mode: #"],
-  ["v4.9.0 · Yönetici", "v4.9.0 · Admin"],
+  ["v# · Yönetici", "v# · Admin"],  // V4.9.9: sürüm numarasından bağımsız (başlıktaki sürüm etiketi)
   ["Yönetici", "Admin"],
   ["Kullanım Kılavuzu", "User Manual"],
   ["Kılavuz", "Manual"],
@@ -1012,7 +1017,7 @@ window.DIL_EN = [
   [`Uygulamayı kurma`, `Installing the app`],
   [`Etkinleştirme`, `Activation`],
   [`Etkinleştirme bir kez yapılır. Kimin adına ve hangi tarihe kadar etkinleştirildiğini <b>Ayarlar</b> sekmesinin en üstünde görebilirsiniz.`, `Activation is done once. You can see for whom and until when the app is activated at the top of the <b>Settings</b> tab.`],
-  [`🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v4.9.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.`, `🛡️ <b>Admin version:</b> A separate APK the developer uses on their own phone (it appears on the home screen as <b>"İklim Yönetici"</b>). It needs no code; the header shows <b>"v4.9.0 · Admin"</b>. This APK stays with the developer and is not distributed to students.`],
+  [`🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v4.9.3 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.`, `🛡️ <b>Admin version:</b> A separate APK the developer uses on their own phone (it appears on the home screen as <b>"İklim Yönetici"</b>). It needs no code; the header shows <b>"v4.9.3 · Admin"</b>. This APK stays with the developer and is not distributed to students.`],
   [`⚠️ <b>Yeni kod gereken durumlar:</b> telefonunuzu değiştirdiğinizde, telefonu fabrika ayarlarına döndürdüğünüzde veya kodun bitiş tarihi geçtiğinde. Bu durumlarda ekrandaki yeni Kurulum Kimliği'ni geliştiriciye yeniden gönderin.`, `⚠️ <b>When a new code is needed:</b> when you change your phone, reset it to factory settings, or the code's expiry date has passed. In these cases send the new Installation ID shown on the screen to the developer again.`],
   [`Üstteki yeşil bant`, `The green bar at the top`],
   [`Renkli şeritler`, `Coloured strips`],

@@ -454,7 +454,7 @@
     /* --- Sol sütun: yeşil bant --- */
     html.stand #topAppHeader {
       grid-column: 1; grid-row: 1 / 4; min-height: 0; overflow: hidden;
-      display: flex; flex-direction: column; padding: 14px 14px 10px;
+      display: flex; flex-direction: column; padding: 12px 14px 8px;
       background-image: linear-gradient(180deg, #065f46 0%, #047857 48%, #115e59 100%);
       box-shadow: 4px 0 18px rgba(0, 0, 0, 0.28); z-index: 5;
     }
@@ -463,43 +463,56 @@
     #standMarka .stand-marka-ad { font-size: 18.5px; font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; }
     #standMarka .stand-marka-alt { font-size: 12px; line-height: 1.25; color: rgba(209, 250, 229, 0.9); margin-top: 2px; }
     /* Üst bilgi: geliştirici + sürüm tek satır, altında rejim rozeti, mod ve son veri */
-    html.stand #ustBilgiSatiri { flex-direction: column-reverse; align-items: stretch; gap: 8px; margin-top: 8px; }
-    html.stand #ustBilgiSag { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 8px; }
+    html.stand #ustBilgiSatiri { flex-direction: column-reverse; align-items: stretch; gap: 5px; margin-top: 7px; }
+    html.stand #ustBilgiSag { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 5px 8px; }
     html.stand #ustBilgiSag .yapimci-satiri { order: 0; justify-content: flex-start; text-align: left; }
     html.stand #ustBilgiSag .yapimci-ad { font-size: 12.5px; }
     html.stand #surumEtiketi { order: 1; }
-    html.stand #dayNightBadge { order: 2; flex: 1 0 100%; text-align: center; padding-top: 5px; padding-bottom: 5px; font-size: 14px !important; }
-    html.stand #subHeaderInfo, html.stand #sonVeriSatiri { font-size: 13.5px !important; }
-    html.stand #sonVeriSatiri { justify-content: space-between; margin-top: 2px; }
-    html.stand #profilSatiri { margin-top: 10px; padding-top: 10px; }
-    html.stand #profileSelector { padding-top: 8px; padding-bottom: 8px; }
-    html.stand #kaynakSatiri button { padding-top: 8px; padding-bottom: 8px; }
+    html.stand #dayNightBadge { order: 2; flex: 1 0 100%; text-align: center; padding-top: 3px; padding-bottom: 3px; font-size: 13.5px !important; }
+    html.stand #subHeaderInfo, html.stand #sonVeriSatiri { font-size: 13px !important; }
+    html.stand #subHeaderInfo { margin-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    html.stand #sonVeriSatiri { justify-content: space-between; margin-top: 1px; }
+    html.stand #sonVeriSatiri .veri-yenile-btn { width: 1.5rem; height: 1.5rem; }
+    html.stand #profilSatiri { margin-top: 7px; padding-top: 7px; }
+    html.stand #profileSelector { padding-top: 6px; padding-bottom: 6px; }
+    html.stand #kaynakSatiri { margin-top: 6px; padding: 3px; }
+    html.stand #kaynakSatiri button { padding-top: 5px; padding-bottom: 5px; }
+    /* V4.9.9: eylem düğmeleri tek sıra, yalnız simge (yer kare koda kalır); tam adları title/aria-label'da */
+    html.stand #eylemSatiri { margin-top: 6px; }
     html.stand #eylemSatiri, html.stand #ustEylemler { width: 100%; }
-    html.stand #ustEylemler { margin-left: 0; flex-wrap: wrap; gap: 6px; }
-    html.stand #ustEylemler > button:not(.hidden) { flex: 1 1 30%; min-height: 2.35rem; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+    html.stand #ustEylemler { margin-left: 0; flex-wrap: nowrap; gap: 5px; }
+    html.stand #ustEylemler > button:not(.hidden) {
+      flex: 1 1 0; min-width: 0; min-height: 1.85rem; padding: 2px 0; font-size: 13px; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+    }
+    html.stand #ustEylemler > #btnDil:not(.hidden) { flex-grow: 1.7; }
+    html.stand #btnKilavuz > span:last-child, html.stand #btnSound .ses-yazi { display: none; }
     html.stand #lastSyncTime { display: none !important; }
-    html.stand #bitkiSatiri { margin-top: 10px; }
+    html.stand #bitkiSatiri { margin-top: 7px; }
+    /* Kılavuz'da da oda ve kaynak satırı görünür kalır: sol bant (ve kare kod) sayfadan sayfaya boy değiştirmesin */
+    html.stand body[data-sekme="guide"] #profilSatiri { display: block; }
+    html.stand body[data-sekme="guide"] #kaynakSatiri { display: grid; }
     /* --- Sol sütunun alt alanı: kare kod --- */
     html.stand #standQr {
       display: flex; flex-direction: column; align-items: center; flex: 1 1 auto; min-height: 0;
-      margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.18);
+      margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.18);
     }
     html.stand #standQr.stand-qr-gizli { justify-content: flex-end; }
     html.stand #standQr.stand-qr-gizli .stand-qr-govde { display: none; }
     .stand-qr-govde { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1 1 auto; min-height: 0; width: 100%; }
-    .stand-qr-baslik { font-size: 16px; font-weight: 800; letter-spacing: 0.01em; text-align: center; line-height: 1.25; }
-    .stand-qr-alt { font-size: 12.5px; text-align: center; color: rgba(209, 250, 229, 0.92); line-height: 1.3; margin-top: 2px; }
+    .stand-qr-baslik { font-size: 16px; font-weight: 800; letter-spacing: 0.01em; text-align: center; line-height: 1.2; white-space: nowrap; }
+    /* V4.9.9: kare kod bandın izin verdiği en büyük kare: yükseklik = bant iç genişliği, yer yoksa esneyerek küçülür.
+       Bant genişliğini (--stand-sol) standSolAyarla() kare koda kalan yüksekliğe göre seçer. */
     .stand-qr-kutu {
-      flex: 0 1 auto; height: 268px; min-height: 96px; max-width: 100%; aspect-ratio: 1 / 1; margin-top: 8px; padding: 0;
-      background: #ffffff; border: 0; border-radius: 14px; cursor: zoom-in; overflow: hidden;
+      flex: 0 1 auto; height: calc(var(--stand-sol, 316px) - 28px); min-height: 96px; max-width: 100%; aspect-ratio: 1 / 1; margin-top: 6px; padding: 0;
+      background: #ffffff; border: 0; border-radius: 12px; cursor: zoom-in; overflow: hidden;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); display: block;
     }
     .stand-qr-kutu svg { display: block; width: 100%; height: 100%; }
-    .stand-qr-adres { font-size: 12.5px; font-weight: 600; margin-top: 7px; text-align: center; color: #ecfdf5; word-break: break-all; line-height: 1.25; }
-    .stand-arac { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 9px; width: 100%; flex: none; }
+    .stand-arac { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: 7px; width: 100%; flex: none; }
     .stand-arac button {
-      flex: 1 1 0; min-height: 2.1rem; padding: 3px 4px; border-radius: 10px; font-size: 13px; font-weight: 700; line-height: 1;
-      color: #ecfdf5; background: rgba(2, 44, 34, 0.5); border: 1px solid rgba(255, 255, 255, 0.22); cursor: pointer; white-space: nowrap;
+      flex: 1 1 0; min-height: 1.6rem; padding: 2px 4px; border-radius: 8px; font-size: 12px; font-weight: 700; line-height: 1;
+      color: rgba(236, 253, 245, 0.9); background: rgba(2, 44, 34, 0.4); border: 1px solid rgba(255, 255, 255, 0.16); cursor: pointer; white-space: nowrap;
     }
     .stand-arac button:active { transform: scale(0.95); }
     .stand-arac button[aria-pressed="true"] { background: rgba(16, 185, 129, 0.55); }
@@ -568,8 +581,9 @@
     html.stand-kisa #panelOzetKarti > .grid > div { padding: 5px 8px; }
     html.stand-kisa #panelRoleKarti > .grid > div { padding: 7px 9px; }
     html.stand-kisa #lcdScreen { font-size: 15.5px !important; line-height: 1.4 !important; }
-    html.stand-kisa #topAppHeader { padding-top: 10px; padding-bottom: 8px; }
-    html.stand-kisa #standQr { margin-top: 9px; padding-top: 9px; }
+    html.stand-kisa #topAppHeader { padding-top: 9px; padding-bottom: 7px; }
+    html.stand-kisa #standQr { margin-top: 7px; padding-top: 7px; }
+    html.stand-kisa #standMarka .stand-marka-alt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     /* --- Diğer sayfalar --- */
     html.stand #tab-guide, html.stand #tab-settings { max-width: none; }
     /* --- Kare kodu büyüten tam ekran katman --- */
@@ -678,7 +692,7 @@
             <span class="yapimci-ad">İlker TÜRKAY</span>
           </div>
           <!-- V4.9.5: sürüm etiketi eylem satırından buraya alındı (eylem satırı tek sıraya sığsın) -->
-          <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide whitespace-nowrap" id="surumEtiketi">v4.9.8</span>
+          <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide whitespace-nowrap" id="surumEtiketi">v4.9.9</span>
         </div>
       </div>
 
@@ -716,9 +730,7 @@
             📲
           </button>
 
-          <button onclick="toggleSound()" id="btnSound" title="Uyarı sesi: açık (dokunarak kapatın)" aria-label="Uyarı sesi açık" class="px-2 py-1 rounded-xl bg-emerald-500/30 border border-white/20 active:scale-95 transition text-xs font-semibold whitespace-nowrap">
-            🔊 Ses
-          </button>
+          <button onclick="toggleSound()" id="btnSound" title="Uyarı sesi: açık (dokunarak kapatın)" aria-label="Uyarı sesi açık" class="px-2 py-1 rounded-xl bg-emerald-500/30 border border-white/20 active:scale-95 transition text-xs font-semibold whitespace-nowrap"><span>🔊</span> <span class="ses-yazi">Ses</span></button>
 
           <button onclick="toggleTheme()" id="btnTheme" title="Açık/Koyu Tema" class="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition text-xs font-semibold">
             ☀️
@@ -754,9 +766,7 @@
       <div id="standQr">
         <div class="stand-qr-govde">
           <div class="stand-qr-baslik">📱 Telefonunuzda açın</div>
-          <div class="stand-qr-alt">Kare kodu kameranızla okutun</div>
           <button type="button" id="standQrKutu" class="stand-qr-kutu" onclick="standQrBuyut(true)" title="Kare kodu büyüt" aria-label="Kare kodu büyüt"></button>
-          <div id="standQrAdres" class="stand-qr-adres" data-dil-yok></div>
         </div>
         <div class="stand-arac">
           <button type="button" id="standTamEkran" onclick="standTamEkranDegistir()" title="Tam ekran" aria-label="Tam ekran">⛶</button>
@@ -1818,6 +1828,20 @@ Ayd:78(05-20)  P:1013</pre>
               📂 Yedekten Geri Yükle
               <input type="file" accept=".json" onchange="uploadBackupJSON(event)" class="hidden" />
             </label>
+          </div>
+          <!-- V4.9.9: yalnız Yönetici sürümünde görünür (lisansKapisi). Uygulama başka bir tarayıcıya ya da adrese (ör. dosyadan
+               localhost'a) taşınırken odalar, anahtarlar ve cihaz eşleşmesi yeniden girilmesin diye tek dosyada aktarılır. -->
+          <div id="tasimaSatiri" class="hidden space-y-2">
+            <p class="text-xs text-[var(--muted-foreground)]">🔁 <b>Başka tarayıcıya taşıma:</b> Bütün odalar, anahtarlar ve cihaz eşleşmesi tek dosyada aktarılır. Dosya gizli anahtar içerir; kimseyle paylaşmayın, işiniz bitince silin.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button onclick="tasimaDisaAktar()" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]">
+                📦 Tüm Veriyi Dışa Aktar
+              </button>
+              <label class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] cursor-pointer text-center">
+                📥 Tüm Veriyi İçe Aktar
+                <input type="file" accept=".json" onchange="tasimaIceAktar(event)" class="hidden" />
+              </label>
+            </div>
           </div>
         </div>
 
@@ -3258,7 +3282,7 @@ Ayd:78(05-20)  P:1013</pre>
       if (ZIYARETCI_SURUMU && !capYerelMi()) {
         lisansBilgisi = { ad: 'Ziyaretçi', bitis: '0', kimlik, ziyaretci: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.8 · COP31';
+        if (etiket) etiket.textContent = 'v4.9.9 · COP31';
         try { if (!localStorage.getItem(DIL_DEPO)) localStorage.setItem(DIL_DEPO, 'en'); } catch (e) {}
         dilBaslat();
         lisansSatiriniGuncelle();
@@ -3268,7 +3292,9 @@ Ayd:78(05-20)  P:1013</pre>
       if (yoneticiSurumu) {  // V4.5: geliştiricinin kendi APK'si
         lisansBilgisi = { ad: 'Yönetici', bitis: '0', kimlik, yonetici: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.8 · Yönetici';
+        if (etiket) etiket.textContent = 'v4.9.9 · Yönetici';
+        const tasima = document.getElementById('tasimaSatiri');
+        if (tasima) tasima.classList.remove('hidden');
         dilBaslat();  // V4.9: dil düğmesi yalnız yönetici sürümünde
         lisansSatiriniGuncelle();
         widgetKoprusuGuncelle();
@@ -3511,7 +3537,7 @@ Ayd:78(05-20)  P:1013</pre>
       soundEnabled = !soundEnabled;
       if (!soundEnabled && alarmZamanlayici) { clearInterval(alarmZamanlayici); alarmZamanlayici = null; }  // V4.5
       const btn = document.getElementById('btnSound');
-      btn.textContent = soundEnabled ? "🔊 Ses" : "🔇 Sessiz";
+      btn.innerHTML = soundEnabled ? '<span>🔊</span> <span class="ses-yazi">Ses</span>' : '<span>🔇</span> <span class="ses-yazi">Sessiz</span>';
       btn.title = soundEnabled ? "Uyarı sesi: açık (dokunarak kapatın)" : "Uyarı sesi: kapalı (dokunarak açın)";
       btn.setAttribute('aria-label', soundEnabled ? "Uyarı sesi açık" : "Uyarı sesi kapalı");
       btn.className = soundEnabled
@@ -6171,6 +6197,44 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       reader.readAsText(file);
     }
 
+    // V4.9.9: TAŞIMA (yalnız Yönetici sürümü). Tarayıcı verisi adrese bağlıdır: uygulama dosya olarak (file://) açılırken
+    // girilen odalar, http://localhost adresinde ya da başka bir tarayıcıda görünmez. Bu iki işlev odaları (anahtarlar ve
+    // PIN ile şifreli cihaz eşleşmesi dahil) ve görünüm tercihlerini tek dosyada taşır. Lisans kodu ve kurulum kimliği
+    // bilerek taşınmaz (kuruluma özeldir).
+    const TASIMA_ANAHTARLAR = ['iklim_v4_profiles', 'iklim_v4_active_profile', 'iklim_bitki_katalogu', 'iklim_genis_ekran',
+      'iklim_stand', 'iklim_stand_genislik', 'iklim_stand_qr', 'iklim_stand_qr_gizli', 'iklim_dil'];
+    function tasimaDisaAktar() {
+      const veri = {};
+      for (const k of TASIMA_ANAHTARLAR) {
+        let v = null;
+        try { v = localStorage.getItem(k); } catch (e) {}
+        if (v !== null) veri[k] = v;
+      }
+      dosyaIndir('iklim_tasima.json', JSON.stringify({ tur: 'iklim-tasima', surum: 1, tarih: new Date().toISOString(), veri }, null, 1), 'application/json');
+    }
+    async function tasimaIceAktar(event) {
+      const girdi = event.target, dosya = girdi.files && girdi.files[0];
+      if (!dosya) return;
+      let d = null;
+      try { d = JSON.parse(await dosya.text()); } catch (e) {}
+      girdi.value = '';
+      let odaSayisi = 0;
+      try { const o = JSON.parse(d.veri.iklim_v4_profiles); if (Array.isArray(o)) odaSayisi = o.length; } catch (e) {}
+      if (!d || d.tur !== 'iklim-tasima' || !odaSayisi) { alert('❌ Bu dosya geçerli bir taşıma dosyası değil.'); return; }
+      const onay = await guvenliDiyalog({
+        baslik: '📥 Tüm Veriyi İçe Aktar',
+        icerikHtml: `<p>Dosyada <b>${odaSayisi} oda</b> var. Bu tarayıcıdaki odalar ve ayarlar dosyadakilerle <b>değiştirilecek</b>; ardından sayfa yeniden açılacak.</p>`,
+        onayMetni: 'İçe Aktar', tehlike: true
+      });
+      if (!onay) return;
+      try {
+        for (const k of TASIMA_ANAHTARLAR) {
+          if (typeof d.veri[k] === 'string') localStorage.setItem(k, d.veri[k]); else localStorage.removeItem(k);
+        }
+      } catch (e) { alert('❌ Kaydedilemedi: ' + (e && e.message ? e.message : e)); return; }
+      location.reload();
+    }
+
     // ============================================================================
     // YUVARLAK (i) BİLGİ VE CANLI DEĞER YORUMLAMA POP-UP SİSTEMİ
     // ============================================================================
@@ -7855,9 +7919,21 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     // Kare kodu SVG olarak üretir (her ölçekte keskin). Hata düzeltme "Q": parlak ekran/yansıma payı.
     function standQrSvg(metin) {
       if (typeof qrcode !== 'function') return '';
-      let q;
-      try { q = qrcode(0, 'Q'); q.addData(metin); q.make(); } catch (e) { return ''; }
-      const n = q.getModuleCount(), kenar = 4, boy = n + 2 * kenar;  // 4 modül sessiz kenar (standart)
+      // V4.9.9: uzaktan okunsun diye modüller olabildiğince iri tutulur.
+      // 1) Yalnız alan adından oluşan adres (yol/sorgu yok) BÜYÜK harfle "alfasayısal" kipte yazılır: alan adında büyük/küçük
+      //    harf fark etmez, kod ise bir-iki sürüm küçülür (33 yerine 25 modül). Yolu olan adres olduğu gibi (bayt kipi) yazılır.
+      // 2) En küçük sürüm seçilir; o sürüme sığan en yüksek hata düzeltme düzeyi (Q > M > L) kullanılır.
+      let veri = metin, kip = 'Byte';
+      const alan = /^(https?:\/\/[a-z0-9.-]+(?::\d+)?)\/?$/i.exec(metin);
+      if (alan) { veri = alan[1].toUpperCase(); kip = 'Alphanumeric'; }
+      const dene = (duzey) => { try { const k = qrcode(0, duzey); k.addData(veri, kip); k.make(); return k; } catch (e) { return null; } };
+      let q = dene('L');
+      if (!q) return '';
+      for (const duzey of ['Q', 'M']) {
+        const k = dene(duzey);
+        if (k && k.getModuleCount() === q.getModuleCount()) { q = k; break; }
+      }
+      const n = q.getModuleCount(), kenar = 3, boy = n + 2 * kenar;  // 3 modül beyaz kenar (kutunun kendisi de beyaz)
       let d = '';
       for (let r = 0; r < n; r++) {
         let c = 0;
@@ -7878,8 +7954,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       const kutu = document.getElementById('standQrKutu'), buyuk = document.getElementById('standQrBuyukKutu');
       if (kutu) kutu.innerHTML = svg;
       if (buyuk) buyuk.innerHTML = svg;
-      const a1 = document.getElementById('standQrAdres'), a2 = document.getElementById('standQrBuyukAdres');
-      if (a1) a1.textContent = kisa;
+      const a2 = document.getElementById('standQrBuyukAdres');
       if (a2) a2.textContent = kisa;
       const giris = document.getElementById('cfgStandQr');
       if (giris && document.activeElement !== giris) giris.value = standDepoOku(STAND_QR_DEPO) || '';
@@ -7927,6 +8002,22 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         else if (el.parentElement !== bant) bant.insertBefore(el, qr || null);
       }
     }
+    // V4.9.9: sol bandın genişliği kare koda göre seçilir. Bant önce en geniş haline getirilir; kare kod kutusunun
+    // (yüksekliği esneyerek kalan yere uyar) aldığı boy ölçülür ve bant "kare kod + iki yan boşluk" kadar daraltılır.
+    // Böylece yüksek ekranda kare kod büyür, alçak ekranda bant gereksiz yere içerikten yer almaz.
+    const STAND_SOL_EN_AZ = 316, STAND_SOL_EN_COK = 384, STAND_SOL_BOSLUK = 28;
+    function standSolAyarla() {
+      const kok = document.documentElement, kabuk = document.getElementById('appShell');
+      const kutu = document.getElementById('standQrKutu'), alan = document.getElementById('standQr');
+      if (!standAcik || !kabuk || !kutu || !alan) { kok.style.removeProperty('--stand-sol'); return; }
+      if (alan.classList.contains('stand-qr-gizli')) { kok.style.setProperty('--stand-sol', STAND_SOL_EN_AZ + 'px'); return; }
+      kok.style.setProperty('--stand-sol', STAND_SOL_EN_COK + 'px');
+      // Ölçüler tasarım pikseline çevrilir (zoom'lu kabukta tarayıcı sürümleri farklı birim döndürebiliyor)
+      const oran = kabuk.getBoundingClientRect().width / standTasarimGenisligi();
+      const boy = oran > 0 ? kutu.getBoundingClientRect().height / oran : 0;
+      const sol = Math.max(STAND_SOL_EN_AZ, Math.min(STAND_SOL_EN_COK, Math.ceil(boy) + STAND_SOL_BOSLUK));
+      kok.style.setProperty('--stand-sol', sol + 'px');
+    }
     function standUygula(zorla) {
       const kok = document.documentElement;
       const uygun = standUygunMu();
@@ -7950,7 +8041,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       } else {
         kok.classList.remove('stand-kisa');
         window.standZoom = 1;
-        ['--stand-zoom', '--stand-w', '--stand-h'].forEach(v => kok.style.removeProperty(v));
+        ['--stand-zoom', '--stand-w', '--stand-h', '--stand-sol'].forEach(v => kok.style.removeProperty(v));
         standQrBuyut(false);
       }
       standSeritleriTasi(ac);
@@ -7961,6 +8052,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       const tam = document.getElementById('standTamEkran');
       if (tam) tam.setAttribute('aria-pressed', document.fullscreenElement ? 'true' : 'false');
       if (ac) standQrCiz();
+      standSolAyarla();
       // Grafikler tuval boyutunu ve ölçeği yeniden hesaplasın (drawMultiLineChart: window.standZoom)
       if (modDegisti || Math.abs(oncekiZoom - (window.standZoom || 1)) > 0.001 || zorla) {
         try { if (typeof renderAllCharts === 'function') renderAllCharts(); } catch (e) {}
@@ -7971,6 +8063,15 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     document.addEventListener('fullscreenchange', () => standUygula(true));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') standQrBuyut(false); });
     standUygula(true);
+    // Sol banttaki içerik değişince (dil, bitki satırı, yazı tipi yüklenmesi) kare koda kalan yer yeniden ölçülür
+    if (window.ResizeObserver && document.getElementById('standQr')) {
+      let standSolBekliyor = false;
+      new ResizeObserver(() => {
+        if (standSolBekliyor) return;
+        standSolBekliyor = true;
+        requestAnimationFrame(() => { standSolBekliyor = false; standSolAyarla(); });
+      }).observe(document.getElementById('standQr'));
+    }
 
     // V4.9: DİL SEÇENEĞİ (düğme yalnız Yönetici APK'sında görünür). Türkçe metinler kaynakta kalır; İngilizce
     // seçilince sayfadaki metinler ve title/placeholder/aria-label öznitelikleri dil_en.js sözlüğüyle çevrilir.
