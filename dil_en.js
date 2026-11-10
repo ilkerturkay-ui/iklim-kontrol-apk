@@ -6,6 +6,12 @@
 window.DIL_EN = [
   // ---- Başlık, üst bant ----------------------------------------------------------------------
   ["Bitki Büyütme Odası İklim Kontrol Platformu", "Plant Growth Room Climate Control Platform"],
+  // ---- V4.9.9: ziyaretçi kopyasında kapalı Ayarlar penceresi ----
+  ["Ayarlar bu görünümde kapalı", "Settings are not available here"],
+  ["Burası canlı bir iklim odasının salt okunur ziyaretçi görünümü olduğu için ayarlar sayfası kapalıdır.", "This is a read-only visitor view of a live climate-control room, so the settings page is closed."],
+  ["Ayarları değiştirmek için standımızdaki eşleşmiş, yetkili cihazı kullanabilirsiniz.", "To change the settings, you can use the paired, authorized device at our stand."],
+  ["Anlayışınız için teşekkürler!", "Thank you for your understanding!"],
+  ["Anladım", "Got it"],
   // ---- V4.9.9: taşıma (yalnız Yönetici sürümü) ----
   ["<b>Başka tarayıcıya taşıma:</b> Bütün odalar, anahtarlar ve cihaz eşleşmesi tek dosyada aktarılır. Dosya gizli anahtar içerir; kimseyle paylaşmayın, işiniz bitince silin.", "<b>Moving to another browser:</b> All rooms, keys and the device pairing are transferred in one file. The file contains secret keys; do not share it and delete it when you are done."],
   ["Tüm Veriyi Dışa Aktar", "Export All Data"],

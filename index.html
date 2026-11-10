@@ -440,7 +440,9 @@
        ========================================================================== */
     #standMarka, #standUst, #standQr, #standGeriDon, #standQrBuyuk { display: none; }
     /* V4.9.9: COP31 ziyaretçi kopyası (salt okunur): Ayarlar, oda/kaynak seçimi ve ses düğmesi yok */
-    html.ziyaretci #nav-settings, html.ziyaretci #kaynakSatiri, html.ziyaretci #profilSatiri, html.ziyaretci #btnSound { display: none !important; }
+    html.ziyaretci #kaynakSatiri, html.ziyaretci #profilSatiri, html.ziyaretci #btnSound { display: none !important; }
+    html.ziyaretci #nav-settings { opacity: 0.4; }  /* Ayarlar simgesi yerinde kalır ama devre dışı görünür; dokununca bilgi penceresi açılır */
+    #ziyaretciAyarPenceresi { position: fixed; inset: 0; z-index: 200000; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; padding: 16px; }
     html.stand, html.stand body { height: 100%; overflow: hidden; }
     html.stand body { padding: 0 !important; }
     html.stand #appShell {
@@ -3281,8 +3283,34 @@ Ayd:78(05-20)  P:1013</pre>
     function ziyaretciMi() { return !!(lisansBilgisi && lisansBilgisi.ziyaretci); }
     function ziyaretciCanliMi() { return ziyaretciMi() && /^https?:$/.test(location.protocol); }
     function tsOkumaTabani() { return ziyaretciCanliMi() ? location.origin + '/ts' : 'https://api.thingspeak.com'; }
+    // Ziyaretçide Ayarlar simgesi soluk durur; dokununca ayarların neden kapalı olduğunu söyleyen pencere açılır
+    function ziyaretciAyarBilgisi() {
+      if (document.getElementById('ziyaretciAyarPenceresi')) return;
+      const kok = document.createElement('div');
+      kok.id = 'ziyaretciAyarPenceresi';
+      kok.innerHTML = `
+        <div class="bg-[var(--card)] border-2 border-emerald-500/40 rounded-3xl w-full max-w-sm p-5 shadow-2xl space-y-3 text-center" role="dialog" aria-modal="true" aria-labelledby="ziyaretciAyarBaslik">
+          <div class="text-3xl">⚙️</div>
+          <h3 id="ziyaretciAyarBaslik" class="text-base font-bold">Ayarlar bu görünümde kapalı</h3>
+          <div class="text-sm text-[var(--muted-foreground)] space-y-2">
+            <p>Burası canlı bir iklim odasının salt okunur ziyaretçi görünümü olduğu için ayarlar sayfası kapalıdır.</p>
+            <p>Ayarları değiştirmek için standımızdaki eşleşmiş, yetkili cihazı kullanabilirsiniz.</p>
+            <p>Anlayışınız için teşekkürler!</p>
+          </div>
+          <button type="button" class="zap-kapat w-full px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-emerald-600">Anladım</button>
+        </div>`;
+      const kapat = () => { document.removeEventListener('keydown', tus); kok.remove(); const d = document.getElementById('nav-settings'); if (d) d.focus(); };
+      const tus = (e) => { if (e.key === 'Escape') kapat(); };
+      kok.querySelector('.zap-kapat').onclick = kapat;
+      kok.addEventListener('click', (e) => { if (e.target === kok) kapat(); });
+      document.addEventListener('keydown', tus);
+      document.body.appendChild(kok);
+      kok.querySelector('.zap-kapat').focus();
+    }
     function ziyaretciKur() {
       document.documentElement.classList.add('ziyaretci');
+      const ayarDugme = document.getElementById('nav-settings');
+      if (ayarDugme) { ayarDugme.onclick = ziyaretciAyarBilgisi; ayarDugme.setAttribute('aria-disabled', 'true'); }
       const o = DEFAULT_PROFILES[0];
       profiles = [{ ...o, id: 'oda1', name: '🌱 Live room: plant growth chamber (home lab)', tsReadKey: '', tsWriteKey: '', komutKanal: undefined, komutWriteKey: undefined, komutReadKey: undefined, uzakEslesme: undefined }];
       currentProfileId = 'oda1';
