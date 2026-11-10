@@ -1,7 +1,7 @@
 {
-  "name": "İklim Kontrol Denetliği",
-  "short_name": "İklimKontrol",
-  "description": "Çift Sensörlü İklim Kontrol ve Uzman Algoritma Mobil Uygulaması",
+  "name": "DENET · Kontrollü Ortam Tarımı İklim Kontrol Platformu",
+  "short_name": "DENET",
+  "description": "Kontrollü Ortam Tarımı İklim Kontrol Platformu",
   "lang": "tr-TR",
   "start_url": "./index.html",
   "scope": "./",

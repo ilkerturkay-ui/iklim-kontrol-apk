@@ -7,11 +7,11 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="apple-mobile-web-app-title" content="İklim Kontrol" />
+  <meta name="apple-mobile-web-app-title" content="DENET" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <title>Bitki Büyütme Odası İklim Kontrol Platformu</title>
+  <title>DENET · Kontrollü Ortam Tarımı İklim Kontrol Platformu</title>
   <style>
     :root, html.dark {
       --background: #0b131e;
@@ -469,8 +469,10 @@
     }
     html.stand #standMarka { display: flex; align-items: center; gap: 10px; }
     #standMarka img { width: 44px; height: 44px; border-radius: 11px; flex: none; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-    #standMarka .stand-marka-ad { font-size: 18.5px; font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; }
-    #standMarka .stand-marka-alt { font-size: 12px; line-height: 1.25; color: rgba(209, 250, 229, 0.9); margin-top: 2px; }
+    #standMarka .stand-marka-ad { font-size: 24px; font-weight: 900; line-height: 1.05; letter-spacing: 0.06em; }
+    #standMarka .stand-marka-alt { font-size: 11.5px; line-height: 1.22; color: rgba(209, 250, 229, 0.92); margin-top: 2px; }
+    /* V5.0: ziyaretçi kopyasında marka satırı (logo + DENET + alt başlık) telefonda da görünür */
+    html.ziyaretci:not(.stand) #standMarka { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     /* Üst bilgi: geliştirici + sürüm tek satır, altında rejim rozeti, mod ve son veri */
     html.stand #ustBilgiSatiri { flex-direction: column-reverse; align-items: stretch; gap: 5px; margin-top: 7px; }
     html.stand #ustBilgiSag { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 5px 8px; }
@@ -592,7 +594,7 @@
     html.stand-kisa #lcdScreen { font-size: 15.5px !important; line-height: 1.4 !important; }
     html.stand-kisa #topAppHeader { padding-top: 9px; padding-bottom: 7px; }
     html.stand-kisa #standQr { margin-top: 7px; padding-top: 7px; }
-    html.stand-kisa #standMarka .stand-marka-alt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    html.stand-kisa #standMarka .stand-marka-alt { font-size: 11px; line-height: 1.18; }
     /* --- Diğer sayfalar --- */
     html.stand #tab-guide, html.stand #tab-settings { max-width: none; }
     /* --- Kare kodu büyüten tam ekran katman --- */
@@ -647,8 +649,8 @@
       <div id="standMarka">
         <img src="./icon.svg" alt="" />
         <div class="min-w-0">
-          <div class="stand-marka-ad">İklim Kontrol Platformu</div>
-          <div class="stand-marka-alt">Çift sensörlü bitki büyütme odası otomasyonu</div>
+          <div class="stand-marka-ad">DENET</div>
+          <div class="stand-marka-alt">Kontrollü Ortam Tarımı İklim Kontrol Platformu</div>
         </div>
       </div>
       <!-- 1. SATIR: Sol Üstte Oda Başlığı, Sağ Üst Köşede Tek Başına Gündüz/Gece Rejimi Rozeti -->
@@ -1950,7 +1952,7 @@ Ayd:78(05-20)  P:1013</pre>
               <li>Uygulamada <b>"Size gönderilen kodu yapıştırın"</b> kutusuna yapıştırın ve <b>Etkinleştir</b>'e dokunun.</li>
             </ol>
             <p>Etkinleştirme bir kez yapılır. Kimin adına ve hangi tarihe kadar etkinleştirildiğini <b>Ayarlar</b> sekmesinin en üstünde görebilirsiniz.</p>
-            <p>🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v5.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.</p>
+            <p>🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"DENET Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v5.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.</p>
             <div class="kilavuz-uyari">⚠️ <b>Yeni kod gereken durumlar:</b> telefonunuzu değiştirdiğinizde, telefonu fabrika ayarlarına döndürdüğünüzde veya kodun bitiş tarihi geçtiğinde. Bu durumlarda ekrandaki yeni Kurulum Kimliği'ni geliştiriciye yeniden gönderin.</div>
           </div>
         </details>
@@ -2222,7 +2224,7 @@ Ayd:78(05-20)  P:1013</pre>
             <ol>
               <li>Uygulamayı <b>bir kez açın</b> (etkinleştirilmiş olmalı ve kanal bilgileri girilmiş olmalı).</li>
               <li>Ana ekranda boş bir yere <b>parmağınızı basılı tutun</b> → <b>Widget'lar</b>.</li>
-              <li>Listede <b>İklim Kontrol</b>'ü bulun, widget'ı ana ekrana sürükleyin.</li>
+              <li>Listede <b>DENET</b>'i bulun, widget'ı ana ekrana sürükleyin.</li>
               <li>Açılan ayar ekranında <b>Bildirim izni ver</b> ve <b>Pil kısıtlamasını kaldır</b>'a dokunun, sonra <b>Kaydet</b>.</li>
             </ol>
             <h4>Uyarı aralıklarını belirleme</h4>
@@ -2232,7 +2234,7 @@ Ayd:78(05-20)  P:1013</pre>
               <li>Uyarı başladığında bir bildirim gelir; devam ederse 3 saatte bir hatırlatılır; düzelince "✅ Düzeldi" bildirimi gelir.</li>
               <li>Uygulama kapalıyken gelen alarm bildirimi telefonun normal bildirim sesi yerine <b>özel siren sesi</b> çalar ve <b>bildirime dokunana ya da bildirim panelini açana kadar tekrarlar</b>. Sesi önceden duymak için widget ayarlarındaki <b>🔔 Alarm sesini dene</b> düğmesini kullanın. Telefon sessiz moddaysa ses çalmaz, titreşim olur.</li>
             </ul>
-            <div class="kilavuz-uyari">⚠️ <b>Bildirim gelmiyorsa:</b> Xiaomi, Huawei, Samsung gibi telefonlar arka plandaki uygulamaları durdurabilir. Telefon <b>Ayarlar → Uygulamalar → İklim Kontrol → Pil</b> bölümünden <b>"Kısıtlama yok"</b> seçin ve bildirim iznini açın.</div>
+            <div class="kilavuz-uyari">⚠️ <b>Bildirim gelmiyorsa:</b> Xiaomi, Huawei, Samsung gibi telefonlar arka plandaki uygulamaları durdurabilir. Telefon <b>Ayarlar → Uygulamalar → DENET → Pil</b> bölümünden <b>"Kısıtlama yok"</b> seçin ve bildirim iznini açın.</div>
           </div>
         </details>
 
@@ -2310,8 +2312,8 @@ Ayd:78(05-20)  P:1013</pre>
         <details id="k-hakkinda" class="kilavuz-bolum">
           <summary>ℹ️ Hakkında</summary>
           <div class="kilavuz-icerik">
-            <img src="./icon.svg" alt="İklim Kontrol Platformu logosu" width="64" height="64" class="rounded-2xl shadow" />
-            <p><b>İklim Kontrol Platformu</b> — mobil uygulama sürüm <b>5.0</b></p>
+            <img src="./icon.svg" alt="DENET logosu" width="64" height="64" class="rounded-2xl shadow" />
+            <p><b>DENET</b> — Kontrollü Ortam Tarımı İklim Kontrol Platformu — mobil uygulama sürüm <b>5.0</b></p>
             <p>Geliştiren: <b>Dr. Öğr. Üyesi İlker TÜRKAY</b></p>
             <p><b>Kullanım şartları:</b> Uygulama ve içeriği geliştiriciye aittir (5846 sayılı Kanun kapsamında korunur, © 2026 Tüm hakları saklıdır). Etkinleştirme kodunu, uygulama paketini veya içeriğini paylaşmak; yazılımı çözümlemek, kopyalamak, değiştirmek, benzerini üretmek veya yapay zekâ araçlarına yükleyerek türev çalışma elde etmek geliştiricinin yazılı izni olmadan yasaktır. Uygulama yalnızca ders ve eğitim amacıyla, size tanınan süre boyunca kullanılabilir.</p>
             <p>Uzaktan ayar ve çoklu telefon özellikleri için cihaz yazılımının (firmware) <b>V4.5</b> veya üstü olması gerekir.</p>
@@ -3224,8 +3226,9 @@ Ayd:78(05-20)  P:1013</pre>
       kok.innerHTML = `
         <div class="max-w-md mx-auto p-5 space-y-4">
           <div class="text-center space-y-1 pt-4">
-            <img src="./icon.svg" alt="İklim Kontrol Platformu logosu" width="72" height="72" class="mx-auto rounded-2xl shadow" />
-            <h2 class="text-base font-bold">İklim Kontrol Platformu</h2>
+            <img src="./icon.svg" alt="DENET logosu" width="72" height="72" class="mx-auto rounded-2xl shadow" />
+            <h2 class="text-base font-bold">DENET</h2>
+            <p class="text-xs">Kontrollü Ortam Tarımı İklim Kontrol Platformu</p>
             <p class="text-xs text-[var(--muted-foreground)]">Geliştiren: Dr. Öğr. Üyesi İlker TÜRKAY</p>
           </div>
           <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 space-y-3">
@@ -3744,7 +3747,7 @@ Ayd:78(05-20)  P:1013</pre>
 
     function testNotificationAndSound() {
       pushLocalNotification(
-        "🔔 İklim Kontrol Test Bildirimi",
+        "🔔 DENET Test Bildirimi",
         `Sesli ve görsel erken uyarı sistemi aktif. VPD: ${fmt(state.vpd, 2)} kPa, T1: ${fmt(state.kontrolSicaklik, 1)}°C`,
         "warning"
       );
