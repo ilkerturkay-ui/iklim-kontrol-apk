@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iklim-kontrol-cache-v24';  // V4.9.7 (kullanım şartları, öğrenci bağlantısı, COP31 ziyaretçi sürümü; önceki: V4.9.6 Rehber'de oda seçici geri geldi; önceki: V4.9.5 Ayarlar sadeleştirme, görsel denetim paketleri 1-8; önceki: V4.9.4 rehber koşul değişikliği, V4.9.3 Yetiştirme Rehberi, katalog dosyası, İngilizce sözlükler)
+const CACHE_NAME = 'iklim-kontrol-cache-v28';  // V5.0 (V4.9.9 olarak başlayan stand düzeni ve canlı ziyaretçi kopyası sürümü; stand düzeninde büyük kare kod, tek sıra eylem düğmeleri, salt okunur canlı ziyaretçi kopyası; önceki: V4.9.8 (yatay geniş ekran "stand" düzeni, ziyaretçi kare kodu; önceki: V4.9.7 kullanım şartları, öğrenci bağlantısı, COP31 ziyaretçi sürümü; önceki: V4.9.6 Rehber'de oda seçici geri geldi; önceki: V4.9.5 Ayarlar sadeleştirme, görsel denetim paketleri 1-8; önceki: V4.9.4 rehber koşul değişikliği, V4.9.3 Yetiştirme Rehberi, katalog dosyası, İngilizce sözlükler))
 const ASSETS = [
   './',
   './index.html',
@@ -28,7 +28,7 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
   // ThingSpeak veya yerel cihaz API isteklerini her zaman ağdan çek
-  if (req.url.includes('api.thingspeak.com') || req.url.includes('/backup_json')) {
+  if (req.url.includes('api.thingspeak.com') || req.url.includes('/backup_json') || req.url.includes('/ts/channels/')) {  // V4.9.9: ziyaretçi aracısı (canlı veri önbelleğe girmez)
     return;
   }
   // Network-first (önce güncel dosyayı çek, çevrimdışıysa önbellekten sun)

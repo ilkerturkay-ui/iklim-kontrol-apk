@@ -430,6 +430,191 @@
     .yr-fark th { color: var(--muted-foreground); font-weight: 600; }
     .yr-fark td.yr-yeni { font-weight: 800; color: #10b981; }
     .yr-fark tr.yr-ayni td { color: var(--muted-foreground); font-weight: 400; }
+
+    /* ============================================================================
+       V4.9.8: STAND DÜZENİ (yatay geniş ekran: dizüstü, tablet, TV'ye yansıtma)
+       html.stand sınıfını standUygula() ekler (genişlik >= 1000 px, yatay, tercih kapalı değil).
+       Yerleşim: solda yeşil bant (başlık + kare kod), sağda sayfa şeridi + içerik + alt sekmeler.
+       Ekran sabit bir tasarım genişliğine (--stand-w) göre ölçeklenir (zoom); böylece Windows ölçeği
+       %100/%125/%150 olsa da 16:10 ve 16:9 ekranda aynı oranlar korunur. Telefon düzeni DEĞİŞMEZ.
+       ========================================================================== */
+    #standMarka, #standUst, #standQr, #standGeriDon, #standQrBuyuk { display: none; }
+    /* V4.9.9: COP31 ziyaretçi kopyası (salt okunur): Ayarlar, oda/kaynak seçimi ve ses düğmesi yok */
+    html.ziyaretci #kaynakSatiri, html.ziyaretci #profilSatiri, html.ziyaretci #btnSound { display: none !important; }
+    html.ziyaretci #nav-settings { opacity: 0.4; }  /* Ayarlar simgesi yerinde kalır ama devre dışı görünür; dokununca bilgi penceresi açılır */
+    #ziyaretciAyarPenceresi { position: fixed; inset: 0; z-index: 200000; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; padding: 16px; }
+    html.stand, html.stand body { height: 100%; overflow: hidden; }
+    html.stand body { padding: 0 !important; }
+    html.stand #appShell {
+      display: grid !important;
+      grid-template-columns: var(--stand-sol, 316px) minmax(0, 1fr);
+      grid-template-rows: auto auto minmax(0, 1fr);
+      width: var(--stand-w, 100vw); height: var(--stand-h, 100vh);
+      max-width: none !important; min-height: 0 !important; margin: 0 !important;
+      border: 0 !important; border-radius: 0 !important; box-shadow: none !important; overflow: hidden !important;
+      zoom: var(--stand-zoom, 1);
+    }
+    html.stand #fakeStatusBar { display: none !important; }
+    /* --- Sol sütun: yeşil bant --- */
+    html.stand #topAppHeader {
+      grid-column: 1; grid-row: 1 / 4; min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column; padding: 12px 14px 8px;
+      background-image: linear-gradient(180deg, #065f46 0%, #047857 48%, #115e59 100%);
+      box-shadow: 4px 0 18px rgba(0, 0, 0, 0.28); z-index: 5;
+    }
+    html.stand #standMarka { display: flex; align-items: center; gap: 10px; }
+    #standMarka img { width: 44px; height: 44px; border-radius: 11px; flex: none; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+    #standMarka .stand-marka-ad { font-size: 18.5px; font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; }
+    #standMarka .stand-marka-alt { font-size: 12px; line-height: 1.25; color: rgba(209, 250, 229, 0.9); margin-top: 2px; }
+    /* Üst bilgi: geliştirici + sürüm tek satır, altında rejim rozeti, mod ve son veri */
+    html.stand #ustBilgiSatiri { flex-direction: column-reverse; align-items: stretch; gap: 5px; margin-top: 7px; }
+    html.stand #ustBilgiSag { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 5px 8px; }
+    html.stand #ustBilgiSag .yapimci-satiri { order: 0; justify-content: flex-start; text-align: left; }
+    html.stand #ustBilgiSag .yapimci-ad { font-size: 12.5px; }
+    html.stand #surumEtiketi { order: 1; }
+    html.stand #dayNightBadge { order: 2; flex: 1 0 100%; text-align: center; padding-top: 3px; padding-bottom: 3px; font-size: 13.5px !important; }
+    html.stand #subHeaderInfo, html.stand #sonVeriSatiri { font-size: 13px !important; }
+    html.stand #subHeaderInfo { margin-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    html.stand #sonVeriSatiri { justify-content: space-between; margin-top: 1px; }
+    html.stand #sonVeriSatiri .veri-yenile-btn { width: 1.5rem; height: 1.5rem; }
+    html.stand #profilSatiri { margin-top: 7px; padding-top: 7px; }
+    html.stand #profileSelector { padding-top: 6px; padding-bottom: 6px; }
+    html.stand #kaynakSatiri { margin-top: 6px; padding: 3px; }
+    html.stand #kaynakSatiri button { padding-top: 5px; padding-bottom: 5px; }
+    /* V4.9.9: eylem düğmeleri tek sıra, yalnız simge (yer kare koda kalır); tam adları title/aria-label'da */
+    html.stand #eylemSatiri { margin-top: 6px; }
+    html.stand #eylemSatiri, html.stand #ustEylemler { width: 100%; }
+    html.stand #ustEylemler { margin-left: 0; flex-wrap: nowrap; gap: 5px; }
+    html.stand #ustEylemler > button:not(.hidden) {
+      flex: 1 1 0; min-width: 0; min-height: 1.85rem; padding: 2px 0; font-size: 13px; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+    }
+    html.stand #ustEylemler > #btnDil:not(.hidden) { flex-grow: 1.7; }
+    html.stand #btnKilavuz > span:last-child, html.stand #btnSound .ses-yazi { display: none; }
+    html.stand #lastSyncTime { display: none !important; }
+    html.stand #bitkiSatiri { margin-top: 7px; }
+    /* Kılavuz'da da oda ve kaynak satırı görünür kalır: sol bant (ve kare kod) sayfadan sayfaya boy değiştirmesin */
+    html.stand body[data-sekme="guide"] #profilSatiri { display: block; }
+    html.stand body[data-sekme="guide"] #kaynakSatiri { display: grid; }
+    /* --- Sol sütunun alt alanı: kare kod --- */
+    html.stand #standQr {
+      display: flex; flex-direction: column; align-items: center; flex: 1 1 auto; min-height: 0;
+      margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    html.stand #standQr.stand-qr-gizli { justify-content: flex-end; }
+    html.stand #standQr.stand-qr-gizli .stand-qr-govde { display: none; }
+    .stand-qr-govde { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1 1 auto; min-height: 0; width: 100%; }
+    .stand-qr-baslik { font-size: 16px; font-weight: 800; letter-spacing: 0.01em; text-align: center; line-height: 1.2; white-space: nowrap; }
+    /* V4.9.9: kare kod bandın izin verdiği en büyük kare: yükseklik = bant iç genişliği, yer yoksa esneyerek küçülür.
+       Bant genişliğini (--stand-sol) standSolAyarla() kare koda kalan yüksekliğe göre seçer. */
+    .stand-qr-kutu {
+      flex: 0 1 auto; height: calc(var(--stand-sol, 316px) - 28px); min-height: 96px; max-width: 100%; aspect-ratio: 1 / 1; margin-top: 6px; padding: 0;
+      background: #ffffff; border: 0; border-radius: 12px; cursor: zoom-in; overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); display: block;
+    }
+    .stand-qr-kutu svg { display: block; width: 100%; height: 100%; }
+    .stand-arac { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: 7px; width: 100%; flex: none; }
+    .stand-arac button {
+      flex: 1 1 0; min-height: 1.6rem; padding: 2px 4px; border-radius: 8px; font-size: 12px; font-weight: 700; line-height: 1;
+      color: rgba(236, 253, 245, 0.9); background: rgba(2, 44, 34, 0.4); border: 1px solid rgba(255, 255, 255, 0.16); cursor: pointer; white-space: nowrap;
+    }
+    .stand-arac button:active { transform: scale(0.95); }
+    .stand-arac button[aria-pressed="true"] { background: rgba(16, 185, 129, 0.55); }
+    /* --- Sağ sütun: üstte sekmeler (APK'daki alt bantla aynı sıra), uyarı şeridi, içerik --- */
+    html.stand #bottomNavBar {
+      grid-column: 2; grid-row: 1; position: static !important; transform: none !important;
+      left: auto !important; right: auto !important; width: auto !important; max-width: none !important;
+      padding: 10px 16px 8px; gap: 8px; border-top: 0; border-bottom: 1px solid var(--border); box-shadow: none;
+    }
+    html.stand #bottomNavBar .nav-btn {
+      font-size: 15px !important; padding-top: 8px !important; padding-bottom: 8px !important;
+      flex-direction: row; justify-content: center; gap: 8px; border: 1px solid var(--border);
+    }
+    html.stand #bottomNavBar .nav-btn > span:first-child { font-size: 20px !important; margin-bottom: 0; }
+    html.stand #bottomNavBar .nav-btn.text-emerald-500 { background: #047857 !important; color: #ffffff !important; border-color: #047857; }
+    html.stand #standUst { display: block; grid-column: 2; grid-row: 2; padding: 0 16px; min-width: 0; }
+    html.stand #standUst > * { margin-top: 8px; }
+    html.stand #standUst #alertContainer:empty, html.stand #standUst .hidden { display: none; }
+    /* Uyarılar yan yana tek satırda (tam metin: üzerine gelince / dokununca title) - dikey alan içeriğe kalır */
+    html.stand body:not([data-sekme="sim"]) #standUst #alertContainer { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; }
+    html.stand #standUst #alertContainer > * { margin-top: 0 !important; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    html.stand #standUst #veriDurumuSeridi { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Sayfa adı üstteki seçili sekmede zaten görünür; Demo'nun mor şeridi (gerçek veri değil uyarısı) kalır */
+    html.stand #activeSourceBanner { display: none; }
+    html.stand body[data-sekme="sim"] #activeSourceBanner, html.stand body[data-sekme="guide"] #activeSourceBanner { display: block; font-size: 14px !important; padding-top: 5px; padding-bottom: 5px; }
+    html.stand #notifDrawer { grid-column: 2; grid-row: 3; align-self: start; z-index: 30; position: relative; max-height: 100%; overflow-y: auto; }
+    html.stand #mainViewport {
+      grid-column: 2; grid-row: 3; min-height: 0; max-height: none !important;
+      overflow-x: hidden !important; overflow-y: auto !important; padding: 12px 16px 14px !important;
+    }
+    /* --- Panel: ekranı tam dolduran ızgara (4 sensör / LCD + röleler / uzman özeti) --- */
+    html.stand #tab-dashboard:not(.hidden) {
+      display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; align-items: stretch; min-height: 100%;
+      grid-template-rows: auto auto auto; align-content: stretch;  /* artan yükseklik üç satıra eşit dağılır */
+    }
+    html.stand #tab-dashboard > * { margin-top: 0 !important; grid-column: 1 / -1; }
+    html.stand #tab-dashboard > #sensorGrid { order: 0; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 10px; }
+    html.stand #tab-dashboard > #cihazEkraniBandi { order: 1; grid-column: span 4; align-items: center; }
+    html.stand #tab-dashboard > #panelRoleKarti { order: 2; grid-column: span 8; }
+    html.stand #tab-dashboard > #panelOzetKarti { order: 3; }
+    html.stand #lcdScreen { font-size: 16.5px !important; line-height: 1.5 !important; }
+    html.stand #sensorGrid > div { display: flex; flex-direction: column; justify-content: space-between; padding: 10px 14px; }
+    html.stand #sensorGrid > div > * { margin-top: 0; }
+    html.stand #sensorGrid .text-2xl { font-size: 2.6rem; line-height: 1.05; }
+    html.stand #sensorGrid .text-2xl + span { font-size: 17px !important; }
+    html.stand #panelRoleKarti, html.stand #panelOzetKarti { display: flex; flex-direction: column; }
+    html.stand #panelRoleKarti > .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1 1 auto; }
+    html.stand #panelRoleKarti > .grid > div { align-items: stretch; }
+    html.stand #panelOzetKarti > .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: minmax(min-content, 1fr) auto; flex: 1 1 auto; }
+    html.stand #panelOzetKarti > .grid > div:not(.col-span-3) { display: flex; flex-direction: column; justify-content: center; }
+    html.stand #panelOzetKarti .ozet-ad { min-height: 0; }
+    html.stand #panelOzetKarti .sec-head, html.stand #panelRoleKarti .sec-head { margin-bottom: 6px; }
+    /* Günlük ışık integrali tek satır: etiket · ayrıntı solda, değer · durum sağda */
+    html.stand #panelOzetKarti > .grid > .col-span-3 > .min-w-0 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    html.stand #panelOzetKarti > .grid > .col-span-3 > .text-right { display: flex; align-items: baseline; gap: 10px; padding-right: 30px; }
+    /* --- Kısa ekran (16:9 ve tarayıcı çubuklu 16:10): standUygula html.stand-kisa ekler; aralıklar daralır --- */
+    html.stand-kisa #bottomNavBar { padding-top: 8px; padding-bottom: 6px; }
+    html.stand-kisa #bottomNavBar .nav-btn { padding-top: 6px !important; padding-bottom: 6px !important; }
+    html.stand-kisa #standUst > * { margin-top: 6px; padding-top: 4px; padding-bottom: 4px; }
+    html.stand-kisa #mainViewport { padding: 8px 16px 10px !important; }
+    html.stand-kisa #tab-dashboard:not(.hidden), html.stand-kisa #tab-dashboard > #sensorGrid { gap: 8px; }
+    html.stand-kisa #sensorGrid > div { padding: 8px 12px; }
+    html.stand-kisa #sensorGrid .text-2xl { font-size: 2.3rem; }
+    html.stand-kisa #panelRoleKarti, html.stand-kisa #panelOzetKarti { padding: 9px 10px; }
+    html.stand-kisa #panelOzetKarti .sec-head, html.stand-kisa #panelRoleKarti .sec-head { margin-bottom: 4px; }
+    html.stand-kisa #panelOzetKarti > .grid > div { padding: 5px 8px; }
+    html.stand-kisa #panelRoleKarti > .grid > div { padding: 7px 9px; }
+    html.stand-kisa #lcdScreen { font-size: 15.5px !important; line-height: 1.4 !important; }
+    html.stand-kisa #topAppHeader { padding-top: 9px; padding-bottom: 7px; }
+    html.stand-kisa #standQr { margin-top: 7px; padding-top: 7px; }
+    html.stand-kisa #standMarka .stand-marka-alt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* --- Diğer sayfalar --- */
+    html.stand #tab-guide, html.stand #tab-settings { max-width: none; }
+    /* --- Kare kodu büyüten tam ekran katman --- */
+    html.stand #standQrBuyuk.acik {
+      display: flex; position: fixed; inset: 0; z-index: 180000; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.2vh; padding: 3vh 3vw; background: rgba(2, 20, 15, 0.94); color: #fff; cursor: zoom-out; text-align: center;
+    }
+    #standQrBuyuk .stand-qr-buyuk-baslik { font-size: clamp(22px, 4.2vh, 54px); font-weight: 800; line-height: 1.15; }
+    #standQrBuyuk .stand-qr-buyuk-kutu { height: min(66vh, 80vw); aspect-ratio: 1 / 1; background: #fff; border-radius: 2.4vh; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
+    #standQrBuyuk .stand-qr-buyuk-kutu svg { display: block; width: 100%; height: 100%; }
+    #standQrBuyuk .stand-qr-buyuk-adres { font-size: clamp(16px, 3vh, 38px); font-weight: 700; word-break: break-all; }
+    #standQrBuyuk .stand-qr-buyuk-not { font-size: clamp(13px, 2vh, 24px); color: rgba(209, 250, 229, 0.85); }
+    /* --- Kritik alarm şeridi (ekranın üstünde sabit) açıkken kabuk o kadar aşağıdan başlar ve kısalır --- */
+    html.stand body.alarm-var #appShell {
+      margin-top: calc(var(--alarm-h, 60px) / var(--stand-zoom, 1)) !important;
+      height: calc(var(--stand-h, 100vh) - var(--alarm-h, 60px) / var(--stand-zoom, 1));
+    }
+    /* --- Kabuğun dışındaki pencereler de aynı ölçekle büyür (bilgi penceresi, onay penceresi, etkinleştirme ekranı) --- */
+    html.stand #infoModal > div { zoom: var(--stand-zoom, 1); max-height: calc(85vh / var(--stand-zoom, 1)); }
+    html.stand body > .fixed > [role="dialog"] { zoom: var(--stand-zoom, 1); max-height: calc(90vh / var(--stand-zoom, 1)); }
+    html.stand #lisansEkrani > div { zoom: var(--stand-zoom, 1); }
+    /* --- Stand düzenine geri dönüş düğmesi (düzen elle kapatıldıysa ve ekran uygunsa görünür) --- */
+    html.stand-kapali-uygun #standGeriDon {
+      display: inline-flex; position: fixed; left: 10px; bottom: 76px; z-index: 60; align-items: center; gap: 6px;
+      padding: 8px 12px; border-radius: 9999px; font-size: 13px; font-weight: 700; color: #fff; cursor: pointer;
+      background: #047857; border: 1px solid rgba(255, 255, 255, 0.35); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
   </style>
   <!-- V4.2: Tailwind v3.4 onceden derlendi (internet/CDN gerektirmez). Yeni sinif eklenirse yeniden derleyin. -->
   <style id="tailwind-derlenmis">*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.visible{visibility:visible}.collapse{visibility:collapse}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.-right-1{right:-.25rem}.-top-1{top:-.25rem}.bottom-0{bottom:0}.right-1\.5{right:.375rem}.right-2{right:.5rem}.right-2\.5{right:.625rem}.top-0{top:0}.top-1\.5{top:.375rem}.top-2{top:.5rem}.top-2\.5{top:.625rem}.z-20{z-index:20}.z-\[100000\]{z-index:100000}.z-\[200000\]{z-index:200000}.col-span-3{grid-column:span 3/span 3}.m-0{margin:0}.mx-auto{margin-left:auto;margin-right:auto}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.ml-auto{margin-left:auto}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-2\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.table{display:table}.grid{display:grid}.hidden{display:none}.\!h-4{height:1rem!important}.h-1\.5{height:.375rem}.h-3\.5{height:.875rem}.h-4{height:1rem}.h-8{height:2rem}.h-\[215px\]{height:215px}.h-full{height:100%}.max-h-48{max-height:12rem}.max-h-\[85vh\]{max-height:85vh}.max-h-\[90vh\]{max-height:90vh}.\!w-4{width:1rem!important}.w-1\.5{width:.375rem}.w-3\.5{width:.875rem}.w-8{width:2rem}.w-\[20\%\]{width:20%}.w-full{width:100%}.min-w-0{min-width:0}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.flex-shrink{flex-shrink:1}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.select-all{-webkit-user-select:all;-moz-user-select:all;user-select:all}.resize{resize:both}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-x-2{-moz-column-gap:.5rem;column-gap:.5rem}.gap-y-0\.5{row-gap:.125rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-3\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.875rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.875rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-\[var\(--border\)\]>:not([hidden])~:not([hidden]){border-color:var(--border)}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-\[\#2c3e50\]{--tw-border-opacity:1;border-color:rgb(44 62 80/var(--tw-border-opacity,1))}.border-\[var\(--border\)\]{border-color:var(--border)}.border-amber-300\/30{border-color:rgba(252,211,77,.3)}.border-amber-300\/40{border-color:rgba(252,211,77,.4)}.border-amber-400\/40{border-color:rgba(251,191,36,.4)}.border-amber-500\/30{border-color:rgba(245,158,11,.3)}.border-amber-500\/40{border-color:rgba(245,158,11,.4)}.border-black{--tw-border-opacity:1;border-color:rgb(0 0 0/var(--tw-border-opacity,1))}.border-blue-500\/30{border-color:rgba(59,130,246,.3)}.border-blue-500\/40{border-color:rgba(59,130,246,.4)}.border-cyan-500\/30{border-color:rgba(6,182,212,.3)}.border-emerald-500\/30{border-color:rgba(16,185,129,.3)}.border-emerald-500\/40{border-color:rgba(16,185,129,.4)}.border-indigo-300\/40{border-color:rgba(165,180,252,.4)}.border-indigo-500\/40{border-color:rgba(99,102,241,.4)}.border-orange-500\/30{border-color:rgba(249,115,22,.3)}.border-purple-500\/30{border-color:rgba(168,85,247,.3)}.border-red-500\/30{border-color:rgba(239,68,68,.3)}.border-rose-400\/40{border-color:rgba(251,113,133,.4)}.border-rose-500\/30{border-color:rgba(244,63,94,.3)}.border-rose-500\/40{border-color:rgba(244,63,94,.4)}.border-sky-500\/30{border-color:rgba(14,165,233,.3)}.border-sky-500\/40{border-color:rgba(14,165,233,.4)}.border-slate-500\/30{border-color:rgba(100,116,139,.3)}.border-teal-500\/30{border-color:rgba(20,184,166,.3)}.border-white\/10{border-color:hsla(0,0%,100%,.1)}.border-white\/15{border-color:hsla(0,0%,100%,.15)}.border-white\/20{border-color:hsla(0,0%,100%,.2)}.border-white\/25{border-color:hsla(0,0%,100%,.25)}.bg-\[\#1b3a1a\]{--tw-bg-opacity:1;background-color:rgb(27 58 26/var(--tw-bg-opacity,1))}.bg-\[var\(--background\)\]{background-color:var(--background)}.bg-\[var\(--card\)\]{background-color:var(--card)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36/var(--tw-bg-opacity,1))}.bg-amber-400\/20{background-color:rgba(251,191,36,.2)}.bg-amber-400\/25{background-color:rgba(251,191,36,.25)}.bg-amber-500\/10{background-color:rgba(245,158,11,.1)}.bg-amber-500\/15{background-color:rgba(245,158,11,.15)}.bg-amber-500\/20{background-color:rgba(245,158,11,.2)}.bg-amber-500\/80{background-color:rgba(245,158,11,.8)}.bg-amber-500\/90{background-color:rgba(245,158,11,.9)}.bg-amber-500\/95{background-color:rgba(245,158,11,.95)}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6/var(--tw-bg-opacity,1))}.bg-amber-950\/60{background-color:rgba(69,26,3,.6)}.bg-black\/25{background-color:rgba(0,0,0,.25)}.bg-black\/75{background-color:rgba(0,0,0,.75)}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-500\/15{background-color:rgba(59,130,246,.15)}.bg-blue-500\/20{background-color:rgba(59,130,246,.2)}.bg-blue-500\/70{background-color:rgba(59,130,246,.7)}.bg-cyan-500\/15{background-color:rgba(6,182,212,.15)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129/var(--tw-bg-opacity,1))}.bg-emerald-500\/10{background-color:rgba(16,185,129,.1)}.bg-emerald-500\/15{background-color:rgba(16,185,129,.15)}.bg-emerald-500\/20{background-color:rgba(16,185,129,.2)}.bg-emerald-500\/30{background-color:rgba(16,185,129,.3)}.bg-emerald-500\/85{background-color:rgba(16,185,129,.85)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-emerald-800\/80{background-color:rgba(6,95,70,.8)}.bg-emerald-950{--tw-bg-opacity:1;background-color:rgb(2 44 34/var(--tw-bg-opacity,1))}.bg-emerald-950\/70{background-color:rgba(2,44,34,.7)}.bg-emerald-950\/80{background-color:rgba(2,44,34,.8)}.bg-indigo-400\/25{background-color:rgba(129,140,248,.25)}.bg-indigo-500\/10{background-color:rgba(99,102,241,.1)}.bg-indigo-500\/15{background-color:rgba(99,102,241,.15)}.bg-indigo-500\/20{background-color:rgba(99,102,241,.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-orange-500\/15{background-color:rgba(249,115,22,.15)}.bg-purple-500\/15{background-color:rgba(168,85,247,.15)}.bg-red-500\/15{background-color:rgba(239,68,68,.15)}.bg-red-600{--tw-bg-opacity:1;background-color:rgb(220 38 38/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-500\/10{background-color:rgba(244,63,94,.1)}.bg-rose-500\/15{background-color:rgba(244,63,94,.15)}.bg-rose-500\/20{background-color:rgba(244,63,94,.2)}.bg-rose-500\/75{background-color:rgba(244,63,94,.75)}.bg-rose-500\/80{background-color:rgba(244,63,94,.8)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-950\/60{background-color:rgba(76,5,25,.6)}.bg-sky-500{--tw-bg-opacity:1;background-color:rgb(14 165 233/var(--tw-bg-opacity,1))}.bg-sky-500\/10{background-color:rgba(14,165,233,.1)}.bg-sky-500\/15{background-color:rgba(14,165,233,.15)}.bg-sky-500\/20{background-color:rgba(14,165,233,.2)}.bg-sky-500\/75{background-color:rgba(14,165,233,.75)}.bg-sky-600{--tw-bg-opacity:1;background-color:rgb(2 132 199/var(--tw-bg-opacity,1))}.bg-slate-400\/40{background-color:rgba(148,163,184,.4)}.bg-slate-500\/15{background-color:rgba(100,116,139,.15)}.bg-slate-500\/20{background-color:rgba(100,116,139,.2)}.bg-teal-500\/15{background-color:rgba(20,184,166,.15)}.bg-teal-500\/75{background-color:rgba(20,184,166,.75)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\/10{background-color:hsla(0,0%,100%,.1)}.bg-white\/15{background-color:hsla(0,0%,100%,.15)}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-emerald-500{--tw-gradient-from:#10b981 var(--tw-gradient-from-position);--tw-gradient-to:rgba(16,185,129,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-emerald-800{--tw-gradient-from:#065f46 var(--tw-gradient-from-position);--tw-gradient-to:rgba(6,95,70,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-indigo-400{--tw-gradient-from:#818cf8 var(--tw-gradient-from-position);--tw-gradient-to:rgba(129,140,248,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-sky-400{--tw-gradient-from:#38bdf8 var(--tw-gradient-from-position);--tw-gradient-to:rgba(56,189,248,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-yellow-400{--tw-gradient-from:#facc15 var(--tw-gradient-from-position);--tw-gradient-to:rgba(250,204,21,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-emerald-700{--tw-gradient-to:rgba(4,120,87,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#047857 var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-amber-500{--tw-gradient-to:#f59e0b var(--tw-gradient-to-position)}.to-blue-600{--tw-gradient-to:#2563eb var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.to-teal-700{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.to-teal-800{--tw-gradient-to:#115e59 var(--tw-gradient-to-position)}.p-1{padding:.25rem}.p-1\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem}.pb-3,.py-3{padding-bottom:.75rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pr-5{padding-right:1.25rem}.pr-6{padding-right:1.5rem}.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}.pt-2\.5{padding-top:.625rem}.pt-3{padding-top:.75rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.\!text-\[10px\]{font-size:10px!important}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.text-\[\#7fff00\]{--tw-text-opacity:1;color:rgb(127 255 0/var(--tw-text-opacity,1))}.text-\[var\(--foreground\)\]{color:var(--foreground)}.text-\[var\(--muted-foreground\)\]{color:var(--muted-foreground)}.text-amber-100{--tw-text-opacity:1;color:rgb(254 243 199/var(--tw-text-opacity,1))}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138/var(--tw-text-opacity,1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36/var(--tw-text-opacity,1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238/var(--tw-text-opacity,1))}.text-emerald-100{--tw-text-opacity:1;color:rgb(209 250 229/var(--tw-text-opacity,1))}.text-emerald-100\/70{color:rgba(209,250,229,.7)}.text-emerald-100\/80{color:rgba(209,250,229,.8)}.text-emerald-100\/85{color:rgba(209,250,229,.85)}.text-emerald-100\/90{color:rgba(209,250,229,.9)}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208/var(--tw-text-opacity,1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153/var(--tw-text-opacity,1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129/var(--tw-text-opacity,1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254/var(--tw-text-opacity,1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252/var(--tw-text-opacity,1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248/var(--tw-text-opacity,1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241/var(--tw-text-opacity,1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-sky-400{--tw-text-opacity:1;color:rgb(56 189 248/var(--tw-text-opacity,1))}.text-sky-500{--tw-text-opacity:1;color:rgb(14 165 233/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-teal-500{--tw-text-opacity:1;color:rgb(20 184 166/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-80{opacity:.8}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.shadow,.shadow-2xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-\[0_0_10px_\#0ea5e9\]{--tw-shadow:0 0 10px #0ea5e9;--tw-shadow-colored:0 0 10px var(--tw-shadow-color)}.shadow-\[0_0_10px_\#0ea5e9\],.shadow-\[0_0_10px_\#3b82f6\]{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_10px_\#3b82f6\]{--tw-shadow:0 0 10px #3b82f6;--tw-shadow-colored:0 0 10px var(--tw-shadow-color)}.shadow-\[0_0_10px_\#f43f5e\]{--tw-shadow:0 0 10px #f43f5e;--tw-shadow-colored:0 0 10px var(--tw-shadow-color)}.shadow-\[0_0_10px_\#f43f5e\],.shadow-\[0_0_10px_\#fbbf24\]{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_10px_\#fbbf24\]{--tw-shadow:0 0 10px #fbbf24;--tw-shadow-colored:0 0 10px var(--tw-shadow-color)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgba(0,0,0,.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color)}.shadow-inner,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-emerald-400\/50{--tw-ring-color:rgba(52,211,153,.5)}.blur{--tw-blur:blur(8px)}.blur,.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.empty\:mt-0:empty{margin-top:0}.hover\:bg-\[var\(--card\)\]:hover{background-color:var(--card)}.hover\:bg-amber-500\/25:hover{background-color:rgba(245,158,11,.25)}.hover\:bg-cyan-500\/25:hover{background-color:rgba(6,182,212,.25)}.hover\:bg-emerald-500\/10:hover{background-color:rgba(16,185,129,.1)}.hover\:bg-emerald-500\/25:hover{background-color:rgba(16,185,129,.25)}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87/var(--tw-bg-opacity,1))}.hover\:bg-orange-500\/25:hover{background-color:rgba(249,115,22,.25)}.hover\:bg-purple-500\/25:hover{background-color:rgba(168,85,247,.25)}.hover\:bg-red-500\/25:hover{background-color:rgba(239,68,68,.25)}.hover\:bg-rose-500\/20:hover{background-color:rgba(244,63,94,.2)}.hover\:bg-rose-500\/25:hover{background-color:rgba(244,63,94,.25)}.hover\:bg-sky-500\/25:hover{background-color:rgba(14,165,233,.25)}.hover\:bg-sky-700:hover{--tw-bg-opacity:1;background-color:rgb(3 105 161/var(--tw-bg-opacity,1))}.hover\:bg-white\/20:hover{background-color:hsla(0,0%,100%,.2)}.hover\:bg-white\/25:hover{background-color:hsla(0,0%,100%,.25)}.hover\:text-\[var\(--foreground\)\]:hover{color:var(--foreground)}.hover\:text-rose-400:hover{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width:420px){.min-\[420px\]\:col-span-2{grid-column:span 2/span 2}.min-\[420px\]\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:640px){.sm\:col-span-2{grid-column:span 2/span 2}.sm\:col-span-6{grid-column:span 6/span 6}.sm\:inline{display:inline}.sm\:flex{display:flex}.sm\:w-auto{width:auto}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:flex-wrap{flex-wrap:wrap}.sm\:items-center{align-items:center}.sm\:p-4{padding:1rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:.875rem;line-height:1.25rem}}@media (min-width:1024px){.lg\:h-\[300px\]{height:300px}}</style>
@@ -453,8 +638,16 @@
 
     <!-- UYGULAMA ÜST BAŞLIĞI -->
     <div id="topAppHeader" class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white px-3.5 py-3 shadow-md">
+      <!-- V4.9.8: Stand düzeni (yatay geniş ekran) marka satırı; telefon düzeninde gizlidir -->
+      <div id="standMarka">
+        <img src="./icon.svg" alt="" />
+        <div class="min-w-0">
+          <div class="stand-marka-ad">İklim Kontrol Platformu</div>
+          <div class="stand-marka-alt">Çift sensörlü bitki büyütme odası otomasyonu</div>
+        </div>
+      </div>
       <!-- 1. SATIR: Sol Üstte Oda Başlığı, Sağ Üst Köşede Tek Başına Gündüz/Gece Rejimi Rozeti -->
-      <div class="flex items-start justify-between gap-2.5">
+      <div id="ustBilgiSatiri" class="flex items-start justify-between gap-2.5">
         <div class="min-w-0 flex-1">
           <h2 id="channelTitle" class="font-bold text-base sm:text-lg tracking-tight leading-snug">
             Bitki Büyütme Odası İklim Denetliği
@@ -493,7 +686,7 @@
         </div>
 
         <!-- Sağ Üst Köşe: Gündüz / Gece Rejimi + Uygulamanın geliştiricisi -->
-        <div class="shrink-0 flex flex-col items-end gap-1.5">
+        <div id="ustBilgiSag" class="shrink-0 flex flex-col items-end gap-1.5">
           <span id="dayNightBadge" class="shrink-0 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30 shadow-sm">
             ☀️ Gündüz Rejimi
           </span>
@@ -503,7 +696,7 @@
             <span class="yapimci-ad">İlker TÜRKAY</span>
           </div>
           <!-- V4.9.5: sürüm etiketi eylem satırından buraya alındı (eylem satırı tek sıraya sığsın) -->
-          <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide whitespace-nowrap" id="surumEtiketi">v4.9.7</span>
+          <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide whitespace-nowrap" id="surumEtiketi">v5.0</span>
         </div>
       </div>
 
@@ -541,9 +734,7 @@
             📲
           </button>
 
-          <button onclick="toggleSound()" id="btnSound" title="Uyarı sesi: açık (dokunarak kapatın)" aria-label="Uyarı sesi açık" class="px-2 py-1 rounded-xl bg-emerald-500/30 border border-white/20 active:scale-95 transition text-xs font-semibold whitespace-nowrap">
-            🔊 Ses
-          </button>
+          <button onclick="toggleSound()" id="btnSound" title="Uyarı sesi: açık (dokunarak kapatın)" aria-label="Uyarı sesi açık" class="px-2 py-1 rounded-xl bg-emerald-500/30 border border-white/20 active:scale-95 transition text-xs font-semibold whitespace-nowrap"><span>🔊</span> <span class="ses-yazi">Ses</span></button>
 
           <button onclick="toggleTheme()" id="btnTheme" title="Açık/Koyu Tema" class="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition text-xs font-semibold">
             ☀️
@@ -574,6 +765,21 @@
       </div>
 
       <div id="alertContainer" class="mt-2 space-y-1.5 empty:mt-0"></div>
+
+      <!-- V4.9.8: Stand düzeni - yeşil bandın alt alanında kare kod ve ekran araçları (telefon düzeninde gizli) -->
+      <div id="standQr">
+        <div class="stand-qr-govde">
+          <div class="stand-qr-baslik">📱 Telefonunuzda açın</div>
+          <button type="button" id="standQrKutu" class="stand-qr-kutu" onclick="standQrBuyut(true)" title="Kare kodu büyüt" aria-label="Kare kodu büyüt"></button>
+        </div>
+        <div class="stand-arac">
+          <button type="button" id="standTamEkran" onclick="standTamEkranDegistir()" title="Tam ekran" aria-label="Tam ekran">⛶</button>
+          <button type="button" onclick="standYaziBoyutu(-1)" title="Yazıları küçült" aria-label="Yazıları küçült">A−</button>
+          <button type="button" onclick="standYaziBoyutu(1)" title="Yazıları büyüt" aria-label="Yazıları büyüt">A+</button>
+          <button type="button" id="standQrGizle" onclick="standQrGosterGizle()" title="Kare kodu göster / gizle" aria-label="Kare kodu göster / gizle" aria-pressed="true">QR</button>
+          <button type="button" onclick="standKapatAc(false)" title="Telefon görünümü" aria-label="Telefon görünümü">📱</button>
+        </div>
+      </div>
     </div>
 
     <!-- BİLDİRİM GEÇMİŞİ ÇEKMECESİ (MODAL OVERLAY) -->
@@ -598,6 +804,9 @@
         <div class="text-[var(--muted-foreground)] py-2 text-center">Henüz kayıtlı uyarı bildirimi yok.</div>
       </div>
     </div>
+
+    <!-- V4.9.8: Stand düzeni - sağ sütunun üst şeridi (standUygula sayfa başlığı ve uyarıları buraya taşır) -->
+    <div id="standUst"></div>
 
     <!-- SEKME İÇERİKLERİ -->
     <div class="flex-1 overflow-y-auto p-3.5 space-y-3.5" id="mainViewport">
@@ -704,7 +913,7 @@ Ayd:78(05-20)  P:1013</pre>
         </div>
 
         <!-- UZMAN ALGORİTMA HIZLI ÖZET ŞERİDİ -->
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-2xl p-3">
+        <div id="panelOzetKarti" class="bg-[var(--background)] border border-[var(--border)] rounded-2xl p-3">
           <div class="flex items-center justify-between mb-2 sec-head">
             <span class="text-xs font-bold uppercase tracking-wider text-emerald-500">🧠 Uzman Algoritma Özeti</span>
             <div class="flex items-center gap-2">
@@ -767,7 +976,7 @@ Ayd:78(05-20)  P:1013</pre>
         </div>
 
         <!-- 4 RÖLE DURUMU -->
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-2xl p-3">
+        <div id="panelRoleKarti" class="bg-[var(--background)] border border-[var(--border)] rounded-2xl p-3">
           <div class="flex items-center justify-between mb-2 sec-head">
             <span class="text-xs font-bold uppercase tracking-wider text-emerald-500">⚡ Röle Durumları</span>
             <div class="flex items-center gap-1.5">
@@ -1593,6 +1802,23 @@ Ayd:78(05-20)  P:1013</pre>
               </div>
             </div>
           </details>
+
+          <!-- V4.9.8: stand düzeni (yatay geniş ekran) ve ziyaretçi kare kodu -->
+          <details class="ayr-ac">
+            <summary><span>🖥️ Yatay Ekran Düzeni ve Kare Kod<span class="ayr-alt">Dizüstü, tablet veya TV'ye yansıtma için; sol bantta ziyaretçi kare kodu</span></span></summary>
+            <div class="space-y-2.5">
+              <div>
+                <label class="block text-xs text-[var(--muted-foreground)] mb-1" for="cfgStandQr">Kare kodun açacağı adres</label>
+                <input type="url" id="cfgStandQr" placeholder="https://iklim.130-61-128-190.sslip.io/" onchange="standQrAdresiKaydet(this.value)" class="w-full px-2.5 py-1.5 rounded-xl text-xs bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]" />
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">Boş bırakılırsa varsayılan ziyaretçi adresi kullanılır. Adres https:// ile başlamalıdır.</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="standKapatAc(true)" class="px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition">🖥️ Yatay ekran düzenini aç</button>
+                <button type="button" onclick="standKapatAc(false)" class="px-3 py-2 rounded-xl text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]">📱 Telefon görünümüne dön</button>
+              </div>
+              <p class="text-xs text-[var(--muted-foreground)]">Yatay düzen, ekran yatay ve en az 1000 piksel genişken kullanılabilir. Sol banttaki A− / A+ düğmeleri yazı boyutunu, ⛶ düğmesi tam ekranı değiştirir.</p>
+            </div>
+          </details>
         </div>
 
         <!-- 4) AYAR YEDEĞİ -->
@@ -1606,6 +1832,20 @@ Ayd:78(05-20)  P:1013</pre>
               📂 Yedekten Geri Yükle
               <input type="file" accept=".json" onchange="uploadBackupJSON(event)" class="hidden" />
             </label>
+          </div>
+          <!-- V4.9.9: yalnız Yönetici sürümünde görünür (lisansKapisi). Uygulama başka bir tarayıcıya ya da adrese (ör. dosyadan
+               localhost'a) taşınırken odalar, anahtarlar ve cihaz eşleşmesi yeniden girilmesin diye tek dosyada aktarılır. -->
+          <div id="tasimaSatiri" class="hidden space-y-2">
+            <p class="text-xs text-[var(--muted-foreground)]">🔁 <b>Başka tarayıcıya taşıma:</b> Bütün odalar, anahtarlar ve cihaz eşleşmesi tek dosyada aktarılır. Dosya gizli anahtar içerir; kimseyle paylaşmayın, işiniz bitince silin.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button onclick="tasimaDisaAktar()" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]">
+                📦 Tüm Veriyi Dışa Aktar
+              </button>
+              <label class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] cursor-pointer text-center">
+                📥 Tüm Veriyi İçe Aktar
+                <input type="file" accept=".json" onchange="tasimaIceAktar(event)" class="hidden" />
+              </label>
+            </div>
           </div>
         </div>
 
@@ -1705,7 +1945,7 @@ Ayd:78(05-20)  P:1013</pre>
               <li>Uygulamada <b>"Size gönderilen kodu yapıştırın"</b> kutusuna yapıştırın ve <b>Etkinleştir</b>'e dokunun.</li>
             </ol>
             <p>Etkinleştirme bir kez yapılır. Kimin adına ve hangi tarihe kadar etkinleştirildiğini <b>Ayarlar</b> sekmesinin en üstünde görebilirsiniz.</p>
-            <p>🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v4.9.3 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.</p>
+            <p>🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v5.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.</p>
             <div class="kilavuz-uyari">⚠️ <b>Yeni kod gereken durumlar:</b> telefonunuzu değiştirdiğinizde, telefonu fabrika ayarlarına döndürdüğünüzde veya kodun bitiş tarihi geçtiğinde. Bu durumlarda ekrandaki yeni Kurulum Kimliği'ni geliştiriciye yeniden gönderin.</div>
           </div>
         </details>
@@ -2066,7 +2306,7 @@ Ayd:78(05-20)  P:1013</pre>
           <summary>ℹ️ Hakkında</summary>
           <div class="kilavuz-icerik">
             <img src="./icon.svg" alt="İklim Kontrol Platformu logosu" width="64" height="64" class="rounded-2xl shadow" />
-            <p><b>İklim Kontrol Platformu</b> — mobil uygulama sürüm <b>4.6</b></p>
+            <p><b>İklim Kontrol Platformu</b> — mobil uygulama sürüm <b>5.0</b></p>
             <p>Geliştiren: <b>Dr. Öğr. Üyesi İlker TÜRKAY</b></p>
             <p><b>Kullanım şartları:</b> Uygulama ve içeriği geliştiriciye aittir (5846 sayılı Kanun kapsamında korunur, © 2026 Tüm hakları saklıdır). Etkinleştirme kodunu, uygulama paketini veya içeriğini paylaşmak; yazılımı çözümlemek, kopyalamak, değiştirmek, benzerini üretmek veya yapay zekâ araçlarına yükleyerek türev çalışma elde etmek geliştiricinin yazılı izni olmadan yasaktır. Uygulama yalnızca ders ve eğitim amacıyla, size tanınan süre boyunca kullanılabilir.</p>
             <p>Uzaktan ayar ve çoklu telefon özellikleri için cihaz yazılımının (firmware) <b>V4.5</b> veya üstü olması gerekir.</p>
@@ -2105,6 +2345,16 @@ Ayd:78(05-20)  P:1013</pre>
       </button>
     </div>
 
+  </div>
+
+  <!-- V4.9.8: Stand düzeni elle kapatıldıysa ve ekran uygunsa görünen geri dönüş düğmesi -->
+  <button type="button" id="standGeriDon" onclick="standKapatAc(true)" title="Yatay ekran düzeni">🖥️ <span>Yatay ekran düzeni</span></button>
+  <!-- V4.9.8: Kare kodun tam ekran büyütülmüş hali (dokununca kapanır) -->
+  <div id="standQrBuyuk" onclick="standQrBuyut(false)" role="dialog" aria-label="Kare kod">
+    <div class="stand-qr-buyuk-baslik">📱 Telefonunuzda açın</div>
+    <div id="standQrBuyukKutu" class="stand-qr-buyuk-kutu"></div>
+    <div id="standQrBuyukAdres" class="stand-qr-buyuk-adres" data-dil-yok></div>
+    <div class="stand-qr-buyuk-not">Kapatmak için dokunun</div>
   </div>
 
   <!-- YUVARLAK (i) BİLGİ VE CANLI DEĞER YORUMLAMA POP-UP PENCERESİ (MODAL) -->
@@ -2156,6 +2406,10 @@ Ayd:78(05-20)  P:1013</pre>
 
   <!-- V4.9: Yetiştirme Rehberi alt çubukta kendi sekmesi (#tab-rehber) -->
 
+  <!-- V4.9.8: Kare kod üretici (stand düzeni). QR Code Generator for JavaScript, Copyright (c) 2009 Kazuhiko Arase,
+       http://www.d-project.com/ , MIT lisansı (http://www.opensource.org/licenses/mit-license.php).
+       "QR Code", DENSO WAVE INCORPORATED şirketinin tescilli markasıdır. İnternet/CDN gerektirmez. -->
+  <script id="qr-kutuphanesi">var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});</script>
   <script>
     // ============================================================================
     // PWA SERVICE WORKER & INSTALL PROMPT
@@ -2368,12 +2622,16 @@ Ayd:78(05-20)  P:1013</pre>
     }
     // Yaş zamanla değişir; ThingSpeak izlenirken veriyi de yenile (sekme açıkken, demo dışında)
     setInterval(updateVeriDurumu, 30000);
+    let canliTik = 0;
     setInterval(() => {
+      // V4.9.9: ziyaretçi kopyası 30 sn'de bir yeniler (sunucudaki aracı önbellekten yanıtlar); diğerleri 2 dk'da bir
+      canliTik++;
+      if (!ziyaretciMi() && canliTik % 4) return;
       // V4.7: etkinleştirilmemiş kopya canlı veri çekmez (bkz. canliVeriyiBaslat)
       if (lisansBilgisi && document.visibilityState === 'visible' && state.dataSource === 'thingspeak' && state.activeTab !== 'sim') {
         fetchThingSpeakLive();
       }
-    }, 120000);
+    }, 30000);
 
 
     // ============================================================================
@@ -2556,6 +2814,7 @@ Ayd:78(05-20)  P:1013</pre>
     }
 
     async function uzakEslestir() {
+      if (ziyaretciMi()) return;
       const p = aktifProfil();
       if (!p) return;
       if (!uzakKriptoVarMi()) { updateUzakDurumUI(); return; }
@@ -2678,6 +2937,7 @@ Ayd:78(05-20)  P:1013</pre>
     // V4.8: secenek = { baslik, ozetHtml } (Yetiştirme Rehberi değer tablosunu kendi onay penceresinde gösterir).
     // Dönüş: komut yazıldıysa { yuva, sira, onay: Promise<'ack'|'red'|'zaman'> }, aksi halde null.
     async function pushSettingsRemote(secenek = {}) {
+      if (ziyaretciMi()) return null;  // ziyaretçi kopyası salt okunur
       const p = aktifProfil();
       if (!uzakKriptoVarMi()) { updateUzakDurumUI(); return null; }
       if (Date.now() < uzakPinKilitMs) {
@@ -2781,7 +3041,8 @@ Ayd:78(05-20)  P:1013</pre>
       const readKey = (document.getElementById('cfgReadKey').value || '').trim();
       const bitis = Date.now() + UZAK_ONAY_BEKLEME_MS;
       while (Date.now() < bitis) {
-        await new Promise(r => setTimeout(r, 20000));
+        // V4.9.8: 20 sn -> 10 sn. Firmware V4.7.6 hızlı modunda onay ~40 sn içinde buluta çıkar; olağan modda (2 dk) da zararsızdır.
+        await new Promise(r => setTimeout(r, 10000));
         try {
           let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/feeds.json?results=3&status=true`;
           if (readKey) url += `&api_key=${encodeURIComponent(readKey)}`;
@@ -3017,6 +3278,47 @@ Ayd:78(05-20)  P:1013</pre>
     }
 
     // Açılışta çağrılır. Geçerli lisans yoksa tam ekran etkinleştirme penceresi uygulamanın üstünü kapatır.
+    // V4.9.9: COP31 ziyaretçi kopyası SALT OKUNURDUR. Okuma, sunucudaki aracı (relay) üzerinden /ts/ yolundan yapılır;
+    // ThingSpeak anahtarı yalnız sunucuda durur. Bu kopyada yazma/komut anahtarı, Ayarlar sayfası, yerel Wi-Fi ve ses yoktur.
+    function ziyaretciMi() { return !!(lisansBilgisi && lisansBilgisi.ziyaretci); }
+    function ziyaretciCanliMi() { return ziyaretciMi() && /^https?:$/.test(location.protocol); }
+    function tsOkumaTabani() { return ziyaretciCanliMi() ? location.origin + '/ts' : 'https://api.thingspeak.com'; }
+    // Ziyaretçide Ayarlar simgesi soluk durur; dokununca ayarların neden kapalı olduğunu söyleyen pencere açılır
+    function ziyaretciAyarBilgisi() {
+      if (document.getElementById('ziyaretciAyarPenceresi')) return;
+      const kok = document.createElement('div');
+      kok.id = 'ziyaretciAyarPenceresi';
+      kok.innerHTML = `
+        <div class="bg-[var(--card)] border-2 border-emerald-500/40 rounded-3xl w-full max-w-sm p-5 shadow-2xl space-y-3 text-center" role="dialog" aria-modal="true" aria-labelledby="ziyaretciAyarBaslik">
+          <div class="text-3xl">⚙️</div>
+          <h3 id="ziyaretciAyarBaslik" class="text-base font-bold">Ayarlar bu görünümde kapalı</h3>
+          <div class="text-sm text-[var(--muted-foreground)] space-y-2">
+            <p>Burası canlı bir iklim odasının salt okunur ziyaretçi görünümü olduğu için ayarlar sayfası kapalıdır.</p>
+            <p>Ayarları değiştirmek için standımızdaki eşleşmiş, yetkili cihazı kullanabilirsiniz.</p>
+            <p>Anlayışınız için teşekkürler!</p>
+          </div>
+          <button type="button" class="zap-kapat w-full px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-emerald-600">Anladım</button>
+        </div>`;
+      const kapat = () => { document.removeEventListener('keydown', tus); kok.remove(); const d = document.getElementById('nav-settings'); if (d) d.focus(); };
+      const tus = (e) => { if (e.key === 'Escape') kapat(); };
+      kok.querySelector('.zap-kapat').onclick = kapat;
+      kok.addEventListener('click', (e) => { if (e.target === kok) kapat(); });
+      document.addEventListener('keydown', tus);
+      document.body.appendChild(kok);
+      kok.querySelector('.zap-kapat').focus();
+    }
+    function ziyaretciKur() {
+      document.documentElement.classList.add('ziyaretci');
+      const ayarDugme = document.getElementById('nav-settings');
+      if (ayarDugme) { ayarDugme.onclick = ziyaretciAyarBilgisi; ayarDugme.setAttribute('aria-disabled', 'true'); }
+      const o = DEFAULT_PROFILES[0];
+      profiles = [{ ...o, id: 'oda1', name: '🌱 Live room: plant growth chamber (home lab)', tsReadKey: '', tsWriteKey: '', komutKanal: ziyaretciCanliMi() ? 'komut' : undefined, komutWriteKey: undefined, komutReadKey: undefined, uzakEslesme: undefined }];
+      currentProfileId = 'oda1';
+      applyProfileToAyar('oda1');
+      renderProfileSelector();
+      soundEnabled = false;  // ziyaretçi telefonlarında alarm sireni çalmasın
+      state.dataSource = 'thingspeak';
+    }
     async function lisansKapisi() {
       const kimlik = await kurulumKimligiAl();
       // V4.9: index.html bilgisayarda yerel dosya (file://) veya localhost olarak açılırsa yönetici simülasyonudur, kod istemez.
@@ -3031,17 +3333,25 @@ Ayd:78(05-20)  P:1013</pre>
       if (ZIYARETCI_SURUMU && !capYerelMi()) {
         lisansBilgisi = { ad: 'Ziyaretçi', bitis: '0', kimlik, ziyaretci: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.7 · COP31';
+        if (etiket) etiket.textContent = 'v5.0 · COP31';
         try { if (!localStorage.getItem(DIL_DEPO)) localStorage.setItem(DIL_DEPO, 'en'); } catch (e) {}
+        ziyaretciKur();
         dilBaslat();
         lisansSatiriniGuncelle();
-        switchTab('sim');
+        if (ziyaretciCanliMi()) {  // sunucuda: evdeki odanın canlı verisi (salt okunur), Panel ile açılır
+          switchTab('dashboard');
+          canliVeriyiBaslat();
+        } else {  // dosyadan açıldıysa aracı yoktur: Demo
+          switchTab('sim');
+        }
         return;
       }
       if (yoneticiSurumu) {  // V4.5: geliştiricinin kendi APK'si
         lisansBilgisi = { ad: 'Yönetici', bitis: '0', kimlik, yonetici: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.7 · Yönetici';
+        if (etiket) etiket.textContent = 'v5.0 · Yönetici';
+        const tasima = document.getElementById('tasimaSatiri');
+        if (tasima) tasima.classList.remove('hidden');
         dilBaslat();  // V4.9: dil düğmesi yalnız yönetici sürümünde
         lisansSatiriniGuncelle();
         widgetKoprusuGuncelle();
@@ -3284,7 +3594,7 @@ Ayd:78(05-20)  P:1013</pre>
       soundEnabled = !soundEnabled;
       if (!soundEnabled && alarmZamanlayici) { clearInterval(alarmZamanlayici); alarmZamanlayici = null; }  // V4.5
       const btn = document.getElementById('btnSound');
-      btn.textContent = soundEnabled ? "🔊 Ses" : "🔇 Sessiz";
+      btn.innerHTML = soundEnabled ? '<span>🔊</span> <span class="ses-yazi">Ses</span>' : '<span>🔇</span> <span class="ses-yazi">Sessiz</span>';
       btn.title = soundEnabled ? "Uyarı sesi: açık (dokunarak kapatın)" : "Uyarı sesi: kapalı (dokunarak açın)";
       btn.setAttribute('aria-label', soundEnabled ? "Uyarı sesi açık" : "Uyarı sesi kapalı");
       btn.className = soundEnabled
@@ -3842,7 +4152,9 @@ Ayd:78(05-20)  P:1013</pre>
       const agMetni = demo ? ayar.ssid : (state.cihazAg || '(bilinmiyor)');
       const dilim = state.lcdSlice % 3;
       const agSatiri = agMetni.length <= 17 ? `Ag:${agMetni}` : agMetni;
-      const s0 = dilim === 0 ? ipMetni : (dilim === 1 ? agSatiri : `${ayar.mdnsAdi}.local`);
+      let s0 = dilim === 0 ? ipMetni : (dilim === 1 ? agSatiri : `${ayar.mdnsAdi}.local`);
+      // V4.9.9: ziyaretçi kopyasında gerçek IP/ağ adı gösterilmez (aracı da bunları göndermez); sabit, zararsız metinler dönüşür
+      if (ziyaretciMi() && !demo) s0 = ['COP31 - LIVE VIEW', 'READ-ONLY VIEW', 'Plant Growth Room'][dilim];
       // V4.9 (firmware 4.7.4 ile aynı): ilk satır 20 sütunda ortalanır
       const s0Kes = s0.slice(0, 20);
       const row0 = formatLcd20(' '.repeat(Math.floor((20 - s0Kes.length) / 2)) + s0Kes);
@@ -4264,7 +4576,7 @@ Ayd:78(05-20)  P:1013</pre>
       if (!zorla && dliGecmis.kanal === chId && Date.now() - dliGecmis.alinmaMs < 10 * 60000) return;
       dliGecmis.yukleniyor = true;
       try {
-        let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/fields/4.json?minutes=1500`;
+        let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(chId)}/fields/4.json?minutes=1500`;
         if (p.tsReadKey) url += `&api_key=${encodeURIComponent(p.tsReadKey)}`;
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -5024,6 +5336,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
 
     // Oturumlu POST: anahtar yoksa giriş ister; oturum düşmüşse bir kez yeniden giriş yapıp tekrarlar.
     async function devicePost(path, params) {
+      if (ziyaretciMi()) throw new Error('Read-only visitor copy.');
       const host = getLocalHost();
       for (let deneme = 0; deneme < 2; deneme++) {
         if (!state.cihazOturum || state.cihazOturumHost !== host) await deviceLogin(host);
@@ -5051,6 +5364,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     };
 
     async function pushSettingsToLocalDevice() {
+      if (ziyaretciMi()) return false;  // ziyaretçi kopyası salt okunur
       if ((!state.localWifiConnected || state.dataSource !== 'local') && uzakHazirMi()) {
         return pushSettingsRemote();  // V4.3
       }
@@ -5295,7 +5609,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       }
 
       statusEl.innerHTML = `<span class="text-amber-500 font-semibold">⏳ ThingSpeak sunucusundan kanal (#${esc(chId)}) verileri çekiliyor...</span>`;
-      let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/feeds.json?results=${encodeURIComponent(results)}&status=true`;
+      let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(chId)}/feeds.json?results=${encodeURIComponent(results)}&status=true`;
       if (readKey) url += `&api_key=${encodeURIComponent(readKey)}`;
       if (baslangicMs) url += `&start=${new Date(baslangicMs).toISOString().slice(0, 19).replace('T', '%20')}`;
 
@@ -5498,7 +5812,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       const canvas = document.getElementById(canvasId);
       if (!canvas) return;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      const dpr = Math.min((window.devicePixelRatio || 1) * (window.standZoom || 1), 3);  // V4.9.8: stand düzeni ölçeği (CSS zoom) dahil
       const cssW = Math.max(canvas.clientWidth || 0, 340);
       const cssH = Math.max(canvas.clientHeight || 0, 150);  // V4.9.5: yatay telefonda 165 px
       if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
@@ -5942,6 +6256,44 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         }
       };
       reader.readAsText(file);
+    }
+
+    // V4.9.9: TAŞIMA (yalnız Yönetici sürümü). Tarayıcı verisi adrese bağlıdır: uygulama dosya olarak (file://) açılırken
+    // girilen odalar, http://localhost adresinde ya da başka bir tarayıcıda görünmez. Bu iki işlev odaları (anahtarlar ve
+    // PIN ile şifreli cihaz eşleşmesi dahil) ve görünüm tercihlerini tek dosyada taşır. Lisans kodu ve kurulum kimliği
+    // bilerek taşınmaz (kuruluma özeldir).
+    const TASIMA_ANAHTARLAR = ['iklim_v4_profiles', 'iklim_v4_active_profile', 'iklim_bitki_katalogu', 'iklim_genis_ekran',
+      'iklim_stand', 'iklim_stand_genislik', 'iklim_stand_qr', 'iklim_stand_qr_gizli', 'iklim_dil'];
+    function tasimaDisaAktar() {
+      const veri = {};
+      for (const k of TASIMA_ANAHTARLAR) {
+        let v = null;
+        try { v = localStorage.getItem(k); } catch (e) {}
+        if (v !== null) veri[k] = v;
+      }
+      dosyaIndir('iklim_tasima.json', JSON.stringify({ tur: 'iklim-tasima', surum: 1, tarih: new Date().toISOString(), veri }, null, 1), 'application/json');
+    }
+    async function tasimaIceAktar(event) {
+      const girdi = event.target, dosya = girdi.files && girdi.files[0];
+      if (!dosya) return;
+      let d = null;
+      try { d = JSON.parse(await dosya.text()); } catch (e) {}
+      girdi.value = '';
+      let odaSayisi = 0;
+      try { const o = JSON.parse(d.veri.iklim_v4_profiles); if (Array.isArray(o)) odaSayisi = o.length; } catch (e) {}
+      if (!d || d.tur !== 'iklim-tasima' || !odaSayisi) { alert('❌ Bu dosya geçerli bir taşıma dosyası değil.'); return; }
+      const onay = await guvenliDiyalog({
+        baslik: '📥 Tüm Veriyi İçe Aktar',
+        icerikHtml: `<p>Dosyada <b>${odaSayisi} oda</b> var. Bu tarayıcıdaki odalar ve ayarlar dosyadakilerle <b>değiştirilecek</b>; ardından sayfa yeniden açılacak.</p>`,
+        onayMetni: 'İçe Aktar', tehlike: true
+      });
+      if (!onay) return;
+      try {
+        for (const k of TASIMA_ANAHTARLAR) {
+          if (typeof d.veri[k] === 'string') localStorage.setItem(k, d.veri[k]); else localStorage.removeItem(k);
+        }
+      } catch (e) { alert('❌ Kaydedilemedi: ' + (e && e.message ? e.message : e)); return; }
+      location.reload();
     }
 
     // ============================================================================
@@ -6404,7 +6756,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
     // simülasyona döner; Demo'dan çıkınca gerçek veri yeniden bağlanır (switchTab).
     // Kaydırma YOK: sürgü/giriş/seçim/grafik üzerinde, yatay kaydırılabilen alanlarda, açık pencerelerde,
     // çok parmakla dokunuşta ve ağırlıklı dikey harekette (sayfayı aşağı kaydırma).
-    const KAYDIRMA_SIRASI = ['dashboard', 'expert', 'charts', 'rehber', 'sim', 'settings'];  // V4.9.2: alt bandla aynı sıra (Demo dahil)
+    const KAYDIRMA_SIRASI = ['dashboard', 'expert', 'charts', 'rehber', 'sim', 'settings'];  // ziyaretçide 'settings' switchTab'da Panel'e çevrilir  // V4.9.2: alt bandla aynı sıra (Demo dahil)
     const KAYDIRMA_ESIK_PX = 70;      // en az yatay mesafe
     const KAYDIRMA_ORAN = 1.8;        // yatay hareket, dikeyin en az bu kadar katı olmalı
     const KAYDIRMA_SURE_MS = 700;     // daha yavaş hareketler "sürükleme/seçme" sayılır
@@ -6475,6 +6827,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
 
     // koruKonum: true ise (yalnız kaydırarak geçişte) dikey kaydırma seviyesi sıfırlanmaz; alt banttaki düğmeler en üste döner.
     function switchTab(tabName, koruKonum) {
+      if (tabName === 'settings' && ziyaretciMi()) tabName = 'dashboard';  // ziyaretçi kopyasında Ayarlar yok
       const prevTab = state.activeTab;
       const konum = {
         vp: (document.getElementById('mainViewport') || {}).scrollTop || 0,
@@ -7395,7 +7748,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       ortakOkumaSonMs = Date.now();
       const sonuc = { okumaMs: Date.now(), durum: 'okunamadi', kayit: null, sonKomutMs: 0, sebep: '' };
       try {
-        let url = `https://api.thingspeak.com/channels/${encodeURIComponent(p.komutKanal)}/feeds.json?results=10`;
+        let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(p.komutKanal)}/feeds.json?results=10`;  // ziyaretçide 'komut' takma adı: aracı yalnız bitki kaydını verir
         if (p.komutReadKey) url += `&api_key=${encodeURIComponent(p.komutReadKey)}`;
         const res = await fetch(url, { cache: 'no-store' });
         const govde = (await res.text()).trim();
@@ -7430,7 +7783,7 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
         const chId = (document.getElementById('cfgChannelId').value || '').trim();
         const readKey = (document.getElementById('cfgReadKey').value || '').trim();
         if (chId) {
-          let url = `https://api.thingspeak.com/channels/${encodeURIComponent(chId)}/feeds.json?results=3&status=true`;
+          let url = `${tsOkumaTabani()}/channels/${encodeURIComponent(chId)}/feeds.json?results=3&status=true`;
           if (readKey) url += `&api_key=${encodeURIComponent(readKey)}`;
           const data = await (await fetch(url, { cache: 'no-store' })).json();
           let oz = null;
@@ -7592,6 +7945,195 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       try { tercih = localStorage.getItem('iklim_genis_ekran'); } catch (e) {}
       genisEkranUygula(tercih === null ? true : tercih === '1');  // masaüstünde varsayılan: geniş
     })();
+
+    // ============================================================================
+    // V4.9.8: STAND DÜZENİ (yatay geniş ekran: dizüstü / tablet / TV'ye yansıtma)
+    // ============================================================================
+    // Ekran yatay ve yeterince genişse (standUygunMu) html.stand sınıfı eklenir: yeşil bant sola geçer, alt
+    // alanında ziyaretçiler için kare kod durur; sayfa başlığı ve uyarılar sağ sütunun üstüne (#standUst) taşınır.
+    // Arayüz sabit bir tasarım genişliğine göre ölçeklenir (CSS zoom): Windows ölçeği veya TV çözünürlüğü ne
+    // olursa olsun oranlar aynı kalır. Telefon düzeni ve dikey ekran bundan etkilenmez.
+    const STAND_QR_VARSAYILAN = 'https://iklim.130-61-128-190.sslip.io/';  // ziyaretçi kopyasının adresi
+    const STAND_DEPO = 'iklim_stand';                    // '0' = stand düzeni elle kapatıldı
+    const STAND_GENISLIK_DEPO = 'iklim_stand_genislik';  // tasarım genişliği (A− / A+)
+    const STAND_QR_DEPO = 'iklim_stand_qr';              // kare kod adresi (Ayarlar'dan değiştirilebilir)
+    const STAND_QR_GIZLI_DEPO = 'iklim_stand_qr_gizli';
+    const STAND_GENISLIKLER = [1040, 1120, 1200, 1280, 1400, 1520];  // küçük genişlik = daha büyük yazı
+    const STAND_SERITLER = ['activeSourceBanner', 'veriDurumuSeridi', 'ayarBandi', 'alertContainer'];
+    var standAcik = false;  // var: lisansKapisi/dilBaslat bu satırdan sonra okur
+    let standSonAnahtar = '';
+
+    function standDepoOku(anahtar) { try { return localStorage.getItem(anahtar); } catch (e) { return null; } }
+    function standDepoYaz(anahtar, deger) {
+      try { if (deger === null) localStorage.removeItem(anahtar); else localStorage.setItem(anahtar, deger); } catch (e) {}
+    }
+    function standUygunMu() {
+      return window.innerWidth >= 1000 && window.innerHeight >= 520 && window.innerWidth / window.innerHeight >= 1.2;
+    }
+    function standTasarimGenisligi() {
+      const g = parseInt(standDepoOku(STAND_GENISLIK_DEPO), 10);
+      return STAND_GENISLIKLER.includes(g) ? g : 1280;
+    }
+    function standQrAdresi() {
+      const a = (standDepoOku(STAND_QR_DEPO) || '').trim();
+      return /^https?:\/\/\S+$/i.test(a) ? a : STAND_QR_VARSAYILAN;
+    }
+    // Kare kodu SVG olarak üretir (her ölçekte keskin). Hata düzeltme "Q": parlak ekran/yansıma payı.
+    function standQrSvg(metin) {
+      if (typeof qrcode !== 'function') return '';
+      // V4.9.9: uzaktan okunsun diye modüller olabildiğince iri tutulur.
+      // 1) Yalnız alan adından oluşan adres (yol/sorgu yok) BÜYÜK harfle "alfasayısal" kipte yazılır: alan adında büyük/küçük
+      //    harf fark etmez, kod ise bir-iki sürüm küçülür (33 yerine 25 modül). Yolu olan adres olduğu gibi (bayt kipi) yazılır.
+      // 2) En küçük sürüm seçilir; o sürüme sığan en yüksek hata düzeltme düzeyi (Q > M > L) kullanılır.
+      let veri = metin, kip = 'Byte';
+      const alan = /^(https?:\/\/[a-z0-9.-]+(?::\d+)?)\/?$/i.exec(metin);
+      if (alan) { veri = alan[1].toUpperCase(); kip = 'Alphanumeric'; }
+      const dene = (duzey) => { try { const k = qrcode(0, duzey); k.addData(veri, kip); k.make(); return k; } catch (e) { return null; } };
+      let q = dene('L');
+      if (!q) return '';
+      for (const duzey of ['Q', 'M']) {
+        const k = dene(duzey);
+        if (k && k.getModuleCount() === q.getModuleCount()) { q = k; break; }
+      }
+      const n = q.getModuleCount(), kenar = 3, boy = n + 2 * kenar;  // 3 modül beyaz kenar (kutunun kendisi de beyaz)
+      let d = '';
+      for (let r = 0; r < n; r++) {
+        let c = 0;
+        while (c < n) {
+          if (!q.isDark(r, c)) { c++; continue; }
+          const b = c;
+          while (c < n && q.isDark(r, c)) c++;
+          d += `M${b + kenar} ${r + kenar}h${c - b}v1h-${c - b}z`;
+        }
+      }
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${boy} ${boy}" shape-rendering="crispEdges" role="img" aria-label="QR">`
+        + `<rect width="${boy}" height="${boy}" fill="#ffffff"/><path d="${d}" fill="#000000"/></svg>`;
+    }
+    function standQrCiz() {
+      const adres = standQrAdresi();
+      const svg = standQrSvg(adres);
+      const kisa = adres.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+      const kutu = document.getElementById('standQrKutu'), buyuk = document.getElementById('standQrBuyukKutu');
+      if (kutu) kutu.innerHTML = svg;
+      if (buyuk) buyuk.innerHTML = svg;
+      const a2 = document.getElementById('standQrBuyukAdres');
+      if (a2) a2.textContent = kisa;
+      const giris = document.getElementById('cfgStandQr');
+      if (giris && document.activeElement !== giris) giris.value = standDepoOku(STAND_QR_DEPO) || '';
+    }
+    function standQrAdresiKaydet(deger) {
+      const a = String(deger || '').trim();
+      standDepoYaz(STAND_QR_DEPO, /^https?:\/\/\S+$/i.test(a) ? a : null);
+      standQrCiz();
+    }
+    function standQrBuyut(ac) {
+      const k = document.getElementById('standQrBuyuk');
+      if (!k) return;
+      k.classList.toggle('acik', !!ac);
+      // role yalnız açıkken: kaydirmaPencereAcik() [role="dialog"] arar; kapalıyken sekme kaydırmayı engellemesin
+      if (ac) k.setAttribute('role', 'dialog'); else k.removeAttribute('role');
+    }
+    function standQrGosterGizle() {
+      const gizli = standDepoOku(STAND_QR_GIZLI_DEPO) !== '1';
+      standDepoYaz(STAND_QR_GIZLI_DEPO, gizli ? '1' : null);
+      standUygula(true);
+    }
+    function standYaziBoyutu(yon) {  // yon: +1 = yazılar büyür (tasarım genişliği küçülür)
+      const i = STAND_GENISLIKLER.indexOf(standTasarimGenisligi());
+      const yeni = STAND_GENISLIKLER[Math.min(STAND_GENISLIKLER.length - 1, Math.max(0, i - yon))];
+      standDepoYaz(STAND_GENISLIK_DEPO, String(yeni));
+      standUygula(true);
+    }
+    function standTamEkranDegistir() {
+      try {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+      } catch (e) {}
+    }
+    function standKapatAc(ac) {
+      standDepoYaz(STAND_DEPO, ac ? null : '0');
+      standUygula(true);
+    }
+    function standSeritleriTasi(standa) {
+      const ust = document.getElementById('standUst'), bant = document.getElementById('topAppHeader'), qr = document.getElementById('standQr');
+      if (!ust || !bant) return;
+      for (const id of STAND_SERITLER) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (standa) { if (el.parentElement !== ust) ust.appendChild(el); }
+        else if (el.parentElement !== bant) bant.insertBefore(el, qr || null);
+      }
+    }
+    // V4.9.9: sol bandın genişliği kare koda göre seçilir. Bant önce en geniş haline getirilir; kare kod kutusunun
+    // (yüksekliği esneyerek kalan yere uyar) aldığı boy ölçülür ve bant "kare kod + iki yan boşluk" kadar daraltılır.
+    // Böylece yüksek ekranda kare kod büyür, alçak ekranda bant gereksiz yere içerikten yer almaz.
+    const STAND_SOL_EN_AZ = 316, STAND_SOL_EN_COK = 384, STAND_SOL_BOSLUK = 28;
+    function standSolAyarla() {
+      const kok = document.documentElement, kabuk = document.getElementById('appShell');
+      const kutu = document.getElementById('standQrKutu'), alan = document.getElementById('standQr');
+      if (!standAcik || !kabuk || !kutu || !alan) { kok.style.removeProperty('--stand-sol'); return; }
+      if (alan.classList.contains('stand-qr-gizli')) { kok.style.setProperty('--stand-sol', STAND_SOL_EN_AZ + 'px'); return; }
+      kok.style.setProperty('--stand-sol', STAND_SOL_EN_COK + 'px');
+      // Ölçüler tasarım pikseline çevrilir (zoom'lu kabukta tarayıcı sürümleri farklı birim döndürebiliyor)
+      const oran = kabuk.getBoundingClientRect().width / standTasarimGenisligi();
+      const boy = oran > 0 ? kutu.getBoundingClientRect().height / oran : 0;
+      const sol = Math.max(STAND_SOL_EN_AZ, Math.min(STAND_SOL_EN_COK, Math.ceil(boy) + STAND_SOL_BOSLUK));
+      kok.style.setProperty('--stand-sol', sol + 'px');
+    }
+    function standUygula(zorla) {
+      const kok = document.documentElement;
+      const uygun = standUygunMu();
+      const ac = uygun && standDepoOku(STAND_DEPO) !== '0';
+      const tasarim = standTasarimGenisligi();
+      const anahtar = [ac, window.innerWidth, window.innerHeight, tasarim].join('|');
+      if (!zorla && anahtar === standSonAnahtar) return;
+      const modDegisti = ac !== standAcik;
+      standSonAnahtar = anahtar;
+      standAcik = ac;
+      kok.classList.toggle('stand', ac);
+      kok.classList.toggle('stand-kapali-uygun', uygun && !ac);
+      const oncekiZoom = window.standZoom || 1;
+      if (ac) {
+        const zoom = window.innerWidth / tasarim;
+        window.standZoom = zoom;
+        kok.style.setProperty('--stand-zoom', zoom.toFixed(4));
+        kok.style.setProperty('--stand-w', tasarim + 'px');
+        kok.style.setProperty('--stand-h', (window.innerHeight / zoom).toFixed(2) + 'px');
+        kok.classList.toggle('stand-kisa', window.innerHeight / zoom < 760);  // 16:9 veya tarayıcı çubuklu ekran
+      } else {
+        kok.classList.remove('stand-kisa');
+        window.standZoom = 1;
+        ['--stand-zoom', '--stand-w', '--stand-h', '--stand-sol'].forEach(v => kok.style.removeProperty(v));
+        standQrBuyut(false);
+      }
+      standSeritleriTasi(ac);
+      const qrKutusu = document.getElementById('standQr'), qrDugme = document.getElementById('standQrGizle');
+      const qrGizli = standDepoOku(STAND_QR_GIZLI_DEPO) === '1';
+      if (qrKutusu) qrKutusu.classList.toggle('stand-qr-gizli', qrGizli);
+      if (qrDugme) qrDugme.setAttribute('aria-pressed', qrGizli ? 'false' : 'true');
+      const tam = document.getElementById('standTamEkran');
+      if (tam) tam.setAttribute('aria-pressed', document.fullscreenElement ? 'true' : 'false');
+      if (ac) standQrCiz();
+      standSolAyarla();
+      // Grafikler tuval boyutunu ve ölçeği yeniden hesaplasın (drawMultiLineChart: window.standZoom)
+      if (modDegisti || Math.abs(oncekiZoom - (window.standZoom || 1)) > 0.001 || zorla) {
+        try { if (typeof renderAllCharts === 'function') renderAllCharts(); } catch (e) {}
+      }
+    }
+    window.addEventListener('resize', () => standUygula(false));
+    window.addEventListener('orientationchange', () => setTimeout(() => standUygula(false), 150));
+    document.addEventListener('fullscreenchange', () => standUygula(true));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') standQrBuyut(false); });
+    standUygula(true);
+    // Sol banttaki içerik değişince (dil, bitki satırı, yazı tipi yüklenmesi) kare koda kalan yer yeniden ölçülür
+    if (window.ResizeObserver && document.getElementById('standQr')) {
+      let standSolBekliyor = false;
+      new ResizeObserver(() => {
+        if (standSolBekliyor) return;
+        standSolBekliyor = true;
+        requestAnimationFrame(() => { standSolBekliyor = false; standSolAyarla(); });
+      }).observe(document.getElementById('standQr'));
+    }
 
     // V4.9: DİL SEÇENEĞİ (düğme yalnız Yönetici APK'sında görünür). Türkçe metinler kaynakta kalır; İngilizce
     // seçilince sayfadaki metinler ve title/placeholder/aria-label öznitelikleri dil_en.js sözlüğüyle çevrilir.
@@ -7815,7 +8357,8 @@ ${state.sensorArizaRiski ? "DİKKAT: En az bir sensör arızalı (kanopi sıcakl
       if (d) d.classList.remove('hidden');
       let tercih = null;
       try { tercih = localStorage.getItem(DIL_DEPO); } catch (e) {}
-      if (tercih === 'en') dilUygula('en');
+      // V4.9.8: stand düzeninde (yatay geniş ekran) kayıtlı dil tercihi yoksa İngilizce başlar; düğmeyle Türkçeye dönülür
+      if (tercih === 'en' || (tercih === null && standAcik)) dilUygula('en');
     }
 
     lisansKapisi();  // V4.4: geçerli kişiye özel kod yoksa tam ekran etkinleştirme penceresi
