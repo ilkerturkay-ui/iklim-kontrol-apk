@@ -696,7 +696,7 @@
             <span class="yapimci-ad">İlker TÜRKAY</span>
           </div>
           <!-- V4.9.5: sürüm etiketi eylem satırından buraya alındı (eylem satırı tek sıraya sığsın) -->
-          <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide whitespace-nowrap" id="surumEtiketi">v4.9.9</span>
+          <span class="text-xs italic text-emerald-100/85 font-normal tracking-wide whitespace-nowrap" id="surumEtiketi">v5.0</span>
         </div>
       </div>
 
@@ -1945,7 +1945,7 @@ Ayd:78(05-20)  P:1013</pre>
               <li>Uygulamada <b>"Size gönderilen kodu yapıştırın"</b> kutusuna yapıştırın ve <b>Etkinleştir</b>'e dokunun.</li>
             </ol>
             <p>Etkinleştirme bir kez yapılır. Kimin adına ve hangi tarihe kadar etkinleştirildiğini <b>Ayarlar</b> sekmesinin en üstünde görebilirsiniz.</p>
-            <p>🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v4.9.3 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.</p>
+            <p>🛡️ <b>Yönetici sürümü:</b> Geliştiricinin kendi telefonunda kullandığı ayrı APK'dır (ana ekranda <b>"İklim Yönetici"</b> adıyla görünür). Kod istemez; başlıkta <b>"v5.0 · Yönetici"</b> yazar. Bu APK yalnızca geliştiricide kalır, öğrencilere dağıtılmaz.</p>
             <div class="kilavuz-uyari">⚠️ <b>Yeni kod gereken durumlar:</b> telefonunuzu değiştirdiğinizde, telefonu fabrika ayarlarına döndürdüğünüzde veya kodun bitiş tarihi geçtiğinde. Bu durumlarda ekrandaki yeni Kurulum Kimliği'ni geliştiriciye yeniden gönderin.</div>
           </div>
         </details>
@@ -2306,7 +2306,7 @@ Ayd:78(05-20)  P:1013</pre>
           <summary>ℹ️ Hakkında</summary>
           <div class="kilavuz-icerik">
             <img src="./icon.svg" alt="İklim Kontrol Platformu logosu" width="64" height="64" class="rounded-2xl shadow" />
-            <p><b>İklim Kontrol Platformu</b> — mobil uygulama sürüm <b>4.6</b></p>
+            <p><b>İklim Kontrol Platformu</b> — mobil uygulama sürüm <b>5.0</b></p>
             <p>Geliştiren: <b>Dr. Öğr. Üyesi İlker TÜRKAY</b></p>
             <p><b>Kullanım şartları:</b> Uygulama ve içeriği geliştiriciye aittir (5846 sayılı Kanun kapsamında korunur, © 2026 Tüm hakları saklıdır). Etkinleştirme kodunu, uygulama paketini veya içeriğini paylaşmak; yazılımı çözümlemek, kopyalamak, değiştirmek, benzerini üretmek veya yapay zekâ araçlarına yükleyerek türev çalışma elde etmek geliştiricinin yazılı izni olmadan yasaktır. Uygulama yalnızca ders ve eğitim amacıyla, size tanınan süre boyunca kullanılabilir.</p>
             <p>Uzaktan ayar ve çoklu telefon özellikleri için cihaz yazılımının (firmware) <b>V4.5</b> veya üstü olması gerekir.</p>
@@ -3333,7 +3333,7 @@ Ayd:78(05-20)  P:1013</pre>
       if (ZIYARETCI_SURUMU && !capYerelMi()) {
         lisansBilgisi = { ad: 'Ziyaretçi', bitis: '0', kimlik, ziyaretci: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.9 · COP31';
+        if (etiket) etiket.textContent = 'v5.0 · COP31';
         try { if (!localStorage.getItem(DIL_DEPO)) localStorage.setItem(DIL_DEPO, 'en'); } catch (e) {}
         ziyaretciKur();
         dilBaslat();
@@ -3349,7 +3349,7 @@ Ayd:78(05-20)  P:1013</pre>
       if (yoneticiSurumu) {  // V4.5: geliştiricinin kendi APK'si
         lisansBilgisi = { ad: 'Yönetici', bitis: '0', kimlik, yonetici: true };
         const etiket = document.getElementById('surumEtiketi');
-        if (etiket) etiket.textContent = 'v4.9.9 · Yönetici';
+        if (etiket) etiket.textContent = 'v5.0 · Yönetici';
         const tasima = document.getElementById('tasimaSatiri');
         if (tasima) tasima.classList.remove('hidden');
         dilBaslat();  // V4.9: dil düğmesi yalnız yönetici sürümünde
